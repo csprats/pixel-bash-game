@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lklvn3n6f22b"
-path="res://.godot/imported/RunWeapon.png-3e2061873346dd3e2d233da182485d75.ctex"
+uid="uid://caxiwhv1o7e72"
+path="res://.godot/imported/Run.png-5236272f1b0265bfb7a8a3d0badb2d95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Character/RunWeapon.png"
-dest_files=["res://.godot/imported/RunWeapon.png-3e2061873346dd3e2d233da182485d75.ctex"]
+source_file="res://Character/Cyborg/Run.png"
+dest_files=["res://.godot/imported/Run.png-5236272f1b0265bfb7a8a3d0badb2d95.ctex"]
 
 [params]
 
