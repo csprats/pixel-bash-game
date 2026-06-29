@@ -10,6 +10,7 @@ class_name CharacterData
 @export_group("Movimiento")
 @export var walk_speed: float = 250.0
 @export var dash_speed: float = 450.0
+@export var dash_duration: float = 0.1
 @export var jump_force: float = -550.0
 @export var double_jump_force: float = -500.0
 @export var weight: float = 1.0  # Influye en el knockback (más alto = más pesado)
