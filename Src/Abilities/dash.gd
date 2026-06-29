@@ -1,13 +1,13 @@
 extends Ability
 
-@export var dash_force: float 
-@export var dash_duration: float
+var dash_force: float 
+var dash_duration: float
 
 func activate(player: CharacterBody2D) -> void:
 	dash_force = player.character_data.dash_speed
 	dash_duration = player.character_data.dash_duration
 	
-	# 1. ¡CORREGIDO!: Bloqueamos el DASH del jugador, no el ataque normal
+	# 1. Bloqueamos el DASH del jugador
 	player._dash_finished = false
 	
 	# 2. Miramos la dirección exacta (1 o -1)
@@ -28,6 +28,6 @@ func activate(player: CharacterBody2D) -> void:
 	
 	# 6. Al terminar el tiempo, frenamos y abrimos el pestillo correcto
 	player.velocity.x = 0
-	player._dash_finished = true # <── ¡Ahora sí coinciden el inicio y el final!
+	player._dash_finished = true
 	
 	queue_free()

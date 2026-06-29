@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://n2cq1d2j6dof"]
+
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://Assets/PressStart2P-Regular.ttf" id="1_2fwl4"]
+[ext_resource type="Script" uid="uid://ddfjtjdt0fl3t" path="res://UI/ui.gd" id="1_dajm1"]
+[ext_resource type="Texture2D" uid="uid://b2y1vq6mqnsjm" path="res://Character/Biker/icon.png" id="3_e6gg6"]
+
+[node name="Ui" type="CanvasLayer" unique_id=185227116 node_paths=PackedStringArray("damage_label")]
+script = ExtResource("1_dajm1")
+damage_label = NodePath("player_ui")
+
+[node name="player_ui" type="Label" parent="." unique_id=2000607540]
+offset_left = 32.0
+offset_top = 149.0
+offset_right = 80.0
+offset_bottom = 172.0
+theme_override_fonts/font = ExtResource("1_2fwl4")
+theme_override_font_sizes/font_size = 8
+text = "0%"
+
+[node name="AnimatedSprite2D" type="TextureRect" parent="." unique_id=1328920752]
+offset_left = 21.0
+offset_top = 146.0
+offset_right = 31.0
+offset_bottom = 157.0
+texture = ExtResource("3_e6gg6")
