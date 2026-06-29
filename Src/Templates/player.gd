@@ -19,3 +19,7 @@ class_name CharacterData
 @export_group("Animaciones")
 @export var body_animations: SpriteFrames
 @export var weapon_animations: SpriteFrames
+
+
+@export_group("Habilidades")
+@export var special_abilities: Array[GDScript] = [] 

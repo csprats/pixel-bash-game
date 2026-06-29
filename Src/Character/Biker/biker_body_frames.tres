@@ -29,6 +29,18 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("1_t535x")
 region = Rect2(240, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl2y7"]
+atlas = ExtResource("3_vcsqf")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8def"]
+atlas = ExtResource("3_vcsqf")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhota"]
+atlas = ExtResource("3_vcsqf")
+region = Rect2(240, 0, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_a7yvj"]
 atlas = ExtResource("2_sl2y7")
 region = Rect2(0, 0, 48, 48)
@@ -116,7 +128,21 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack",
-"speed": 8.0
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sl2y7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p8def")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhota")
+}],
+"loop": false,
+"name": &"Dash",
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,

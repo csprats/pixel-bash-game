@@ -35,8 +35,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = character_data.jump_force
 		
-	velocity.x = Input.get_axis("left", "right") * character_data.walk_speed
+	# ANTES: velocity.x = Input.get_axis("left", "right") * character_data.walk_speed
 	
+	# AHORA: Solo calculamos las flechas si NO estamos en mitad del dash
+	if _attack_finished:
+		velocity.x = Input.get_axis("left", "right") * character_data.walk_speed	
 	# 1. Detectar la pulsación de ataque ANTES que el movimiento
 	if (velocity.x < 0 or velocity.x > 0) and is_on_floor() and Input.is_action_just_pressed("attack"):
 		_attack_finished = false
@@ -63,8 +66,24 @@ func _physics_process(delta: float) -> void:
 		_weapon.scale.x = direccion
 	
 	move_and_slide()
+	
+	# 3. Detectar Ataque Especial
+	if _attack_finished and is_on_floor() and Input.is_action_just_pressed("special_attack"):
+		# Verificamos si el .tres tiene alguna habilidad guardada en la primera casilla
+		if character_data and character_data.special_abilities.size() > 0:
+			var ability_script = character_data.special_abilities[0]
+			
+			if ability_script:
+				# Instanciamos el script de la habilidad en la memoria
+				var new_ability = ability_script.new()
+				# La añadimos al juego temporalmente para que funcione
+				add_child(new_ability)
+				# La activamos pasándole a "este" jugador (self)
+				new_ability.activate(self)
+				# Una vez usada, la borramos para no saturar la memoria
+				new_ability.queue_free()
 
 # Recuerda tener esta señal conectada en la pestaña "Nodo" de tu _body
 func _on_body_animation_finished() -> void:
-	if _body.animation == "Attack" or _body.animation == "Run_Attack":
+	if _body.animation == "Attack" or _body.animation == "Run_Attack" or _body.animation == "Dash":
 		_attack_finished = true
