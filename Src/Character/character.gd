@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 @export var character_data: CharacterData
-@onready var _body: AnimatedSprite2D = $Body  # O el nombre exacto de tu nodo de cuerpo
-@onready var _weapon: AnimatedSprite2D = $Weapon # O el nombre exacto de tu nodo de arma
+@onready var _body: AnimatedSprite2D = $Body
+@onready var _weapon: AnimatedSprite2D = $Weapon
 
 # Iniciamos en true porque al empezar la partida no estamos atacando
 var _attack_finished: bool = true
@@ -21,10 +21,8 @@ func _ready() -> void:
 		# CONEXIÓN POR CÓDIGO: Asegura que Godot detecte el final de la animación del .tres
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
-			print('conectado!')
 
 func _physics_process(delta: float) -> void:
-
 	
 	# SEGURO: Si no hay un archivo .tres puesto, el personaje se frena aquí y no hace nada
 	if not character_data:
@@ -40,14 +38,18 @@ func _physics_process(delta: float) -> void:
 	velocity.x = Input.get_axis("left", "right") * character_data.walk_speed
 	
 	# 1. Detectar la pulsación de ataque ANTES que el movimiento
-	if _attack_finished and is_on_floor() and Input.is_action_just_pressed("attack"):
+	if (velocity.x < 0 or velocity.x > 0) and is_on_floor() and Input.is_action_just_pressed("attack"):
+		_attack_finished = false
+		_body.play('Run_Attack')
+		_weapon.play('Run_Attack')
+	elif _attack_finished and is_on_floor() and Input.is_action_just_pressed("attack"):
 		_attack_finished = false  # Bloqueamos otras animaciones
 		_body.play("Attack")
 		_weapon.play("Attack")
 
 	# 2. Control del resto de animaciones (Solo si NO estamos en mitad de un ataque)
 	if _attack_finished:
-		if not is_on_floor() or (velocity.x < 0 or velocity.x > 0):
+		if (velocity.x < 0 or velocity.x > 0):
 			_body.play("Run")
 			_weapon.play("Run")
 		elif velocity.y == 0:
@@ -64,5 +66,5 @@ func _physics_process(delta: float) -> void:
 
 # Recuerda tener esta señal conectada en la pestaña "Nodo" de tu _body
 func _on_body_animation_finished() -> void:
-	if _body.animation == "Attack":
+	if _body.animation == "Attack" or _body.animation == "Run_Attack":
 		_attack_finished = true

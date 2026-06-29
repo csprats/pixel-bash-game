@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dml0ujfru4vhx"
-path="res://.godot/imported/Tileset.png-17cb559e4b2564b835d39be4154d710f.ctex"
+uid="uid://d335ojm2eerlp"
+path="res://.godot/imported/Run_attack.png-592f5ec4efd1e0b7176b112b630b1a9d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset.png"
-dest_files=["res://.godot/imported/Tileset.png-17cb559e4b2564b835d39be4154d710f.ctex"]
+source_file="res://Character/Biker/Run_attack.png"
+dest_files=["res://.godot/imported/Run_attack.png-592f5ec4efd1e0b7176b112b630b1a9d.ctex"]
 
 [params]
 

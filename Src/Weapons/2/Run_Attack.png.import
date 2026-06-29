@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhf2x6idmv101"
-path="res://.godot/imported/AttackWeapon.png-9fc179b2830a64281407a1c460ea7ea2.ctex"
+uid="uid://c4ji3wxnirmpw"
+path="res://.godot/imported/Run_Attack.png-c7d627f1db0cc8dd4e7b25a8234651a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Character/Cyborg/AttackWeapon.png"
-dest_files=["res://.godot/imported/AttackWeapon.png-9fc179b2830a64281407a1c460ea7ea2.ctex"]
+source_file="res://Weapons/2/Run_Attack.png"
+dest_files=["res://.godot/imported/Run_Attack.png-c7d627f1db0cc8dd4e7b25a8234651a9.ctex"]
 
 [params]
 

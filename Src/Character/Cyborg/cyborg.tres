@@ -2,10 +2,14 @@
 
 [ext_resource type="SpriteFrames" uid="uid://cicwlxdymg15q" path="res://Character/Cyborg/cyborg_body_frames.tres" id="1_nd1ef"]
 [ext_resource type="Script" uid="uid://4au8kg10088b" path="res://Components/player.gd" id="2_uxets"]
-[ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Character/Cyborg/cyborg_weapon_frames.tres" id="3_dhs75"]
+[ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_nd1ef"]
 
 [resource]
 script = ExtResource("2_uxets")
+character_name = "Cyborg"
+walk_speed = 200.0
+jump_force = -350.0
+weight = 1.2
 body_animations = ExtResource("1_nd1ef")
-weapon_animations = ExtResource("3_dhs75")
+weapon_animations = ExtResource("3_nd1ef")
 metadata/_custom_type_script = "uid://4au8kg10088b"

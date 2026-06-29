@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cxlaih6iowil" path="res://Character/Cyborg/Attack.png" id="1_qq5ew"]
 [ext_resource type="Texture2D" uid="uid://crd2flgl7tggb" path="res://Character/Cyborg/Idle.png" id="2_po2fa"]
 [ext_resource type="Texture2D" uid="uid://caxiwhv1o7e72" path="res://Character/Cyborg/Run.png" id="3_42vux"]
+[ext_resource type="Texture2D" uid="uid://b6t2d6xcwboye" path="res://Character/Cyborg/Run_attack.png" id="4_po2fa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22evo"]
 atlas = ExtResource("1_qq5ew")
@@ -68,6 +69,30 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("3_42vux")
 region = Rect2(240, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_42vux"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56apx"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e74tl"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjblb"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er732"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e57e"]
+atlas = ExtResource("4_po2fa")
+region = Rect2(240, 0, 48, 48)
+
 [resource]
 animations = [{
 "frames": [{
@@ -131,5 +156,28 @@ animations = [{
 }],
 "loop": true,
 "name": &"Run",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42vux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56apx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e74tl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjblb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er732")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e57e")
+}],
+"loop": false,
+"name": &"Run_Attack",
 "speed": 11.0
 }]

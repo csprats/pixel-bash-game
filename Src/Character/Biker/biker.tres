@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4au8kg10088b" path="res://Components/player.gd" id="1_c6cli"]
 [ext_resource type="SpriteFrames" uid="uid://cv23sn5385m7r" path="res://Character/Biker/biker_body_frames.tres" id="1_im0nh"]
-[ext_resource type="SpriteFrames" uid="uid://btqwdox11wgns" path="res://Character/Biker/biker_weapon_frames.tres" id="3_wslwi"]
+[ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_im0nh"]
 
 [resource]
 script = ExtResource("1_c6cli")
@@ -10,5 +10,5 @@ character_name = "Biker"
 walk_speed = 200.0
 jump_force = -350.0
 body_animations = ExtResource("1_im0nh")
-weapon_animations = ExtResource("3_wslwi")
+weapon_animations = ExtResource("3_im0nh")
 metadata/_custom_type_script = "uid://4au8kg10088b"

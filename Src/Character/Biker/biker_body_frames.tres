@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b2ky7516uht4w" path="res://Character/Biker/Attack.png" id="1_t535x"]
 [ext_resource type="Texture2D" uid="uid://bhb1rdctsih7x" path="res://Character/Biker/Idle.png" id="2_sl2y7"]
 [ext_resource type="Texture2D" uid="uid://4db7g6fu0ept" path="res://Character/Biker/Run.png" id="3_vcsqf"]
+[ext_resource type="Texture2D" uid="uid://d335ojm2eerlp" path="res://Character/Biker/Run_attack.png" id="4_sl2y7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_23g6l"]
 atlas = ExtResource("1_t535x")
@@ -68,6 +69,30 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("3_vcsqf")
 region = Rect2(240, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcsqf"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmoqs"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvw24"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdfmu"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbrqs"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohfwd"]
+atlas = ExtResource("4_sl2y7")
+region = Rect2(240, 0, 48, 48)
+
 [resource]
 animations = [{
 "frames": [{
@@ -131,5 +156,28 @@ animations = [{
 }],
 "loop": true,
 "name": &"Run",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcsqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmoqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvw24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdfmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbrqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohfwd")
+}],
+"loop": false,
+"name": &"Run_Attack",
 "speed": 11.0
 }]
