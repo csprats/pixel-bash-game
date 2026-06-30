@@ -17,6 +17,6 @@ dash_duration = 0.15
 jump_force = -350.0
 body_animations = ExtResource("1_im0nh")
 weapon_animations = ExtResource("3_im0nh")
-shield_duration = 0.4
+shield_cooldown = 5.0
 special_abilities = Array[GDScript]([ExtResource("3_6qoyw"), ExtResource("4_7di27")])
 metadata/_custom_type_script = "uid://4au8kg10088b"

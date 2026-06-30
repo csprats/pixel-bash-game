@@ -3,6 +3,8 @@ extends Ability
 var shield_duration: float
 
 func activate(player: CharacterBody2D) -> void:
+	if (player._is_invincible): return
+	
 	shield_duration = player.character_data.shield_duration
 	
 	player.modulate = Color(0, 0.5, 1, 1) # Brillo azul de escudo
@@ -12,4 +14,8 @@ func activate(player: CharacterBody2D) -> void:
 	await timer.timeout
 	
 	player.modulate = Color(1, 1, 1, 1) # Vuelve a su color normal
+	
+	var cooldown = player.get_tree().create_timer(player.character_data.shield_cooldown)
+	await cooldown.timeout
+	
 	player._is_invincible = false # Desactivar la invencibilidad

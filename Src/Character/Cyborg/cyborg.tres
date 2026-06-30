@@ -1,15 +1,20 @@
 [gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://deopv2hmm2h2i"]
 
 [ext_resource type="SpriteFrames" uid="uid://cicwlxdymg15q" path="res://Character/Cyborg/cyborg_body_frames.tres" id="1_nd1ef"]
+[ext_resource type="Texture2D" uid="uid://eco1kjwtp5xf" path="res://Character/Cyborg/Icon.png" id="2_dhs75"]
 [ext_resource type="Script" uid="uid://4au8kg10088b" path="res://Templates/player.gd" id="2_uxets"]
 [ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_nd1ef"]
+[ext_resource type="Script" uid="uid://bedvy02wa0skg" path="res://Abilities/dash.gd" id="4_dhs75"]
+[ext_resource type="Script" uid="uid://dfevifalhtlam" path="res://Abilities/shield.gd" id="5_vjxnr"]
 
 [resource]
 script = ExtResource("2_uxets")
 character_name = "Cyborg"
-walk_speed = 200.0
-jump_force = -350.0
+character_icon = ExtResource("2_dhs75")
+walk_speed = 175.0
+jump_force = -325.0
 weight = 1.2
 body_animations = ExtResource("1_nd1ef")
 weapon_animations = ExtResource("3_nd1ef")
+special_abilities = Array[GDScript]([ExtResource("4_dhs75"), ExtResource("5_vjxnr")])
 metadata/_custom_type_script = "uid://4au8kg10088b"

@@ -24,4 +24,5 @@ class_name CharacterData
 
 @export_group("Habilidades")
 @export var shield_duration: float = 1
+@export var shield_cooldown: float = 2
 @export var special_abilities: Array[GDScript] = [] 
