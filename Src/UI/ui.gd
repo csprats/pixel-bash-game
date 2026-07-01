@@ -12,7 +12,6 @@ func _ready() -> void:
 	var jugadores = get_tree().get_nodes_in_group("player")
 	
 	if jugadores.size() > 0 and damage_label.size() > 0 and player_icon.size() > 0:
-		print('pasa el if')
 		for i in range(jugadores.size()):
 			var player = jugadores[i]
 			var text = damage_label[i]
@@ -25,11 +24,7 @@ func _ready() -> void:
 			print("UI asignada con éxito al personaje: ", player.character_data.character_name)
 			
 			icon.texture = player.character_data.character_icon
-			
-	print(damage_label.size())
-	print(player_icon.size())
 
-# Esta función se activa sola cuando el jugador grita que ha cambiado su daño
 #func _on_player_damage_changed(new_damage: int) -> void:
 	#damage_label.text = str(new_damage) + "%"
 	

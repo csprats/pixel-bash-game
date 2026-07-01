@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://tl2em8dc6lux" path="res://Character/character.tscn" id="1_s77ou"]
 [ext_resource type="PackedScene" uid="uid://bcn4r6y3qf8ke" path="res://Levels/Level test/level_test.tscn" id="2_y38xe"]
 [ext_resource type="PackedScene" uid="uid://n2cq1d2j6dof" path="res://UI/ui.tscn" id="3_y38xe"]
+[ext_resource type="PackedScene" uid="uid://bhmfbvlq0s41" path="res://Test Enemy/character.tscn" id="4_ycs6q"]
 
 [node name="Node2D" type="Node2D" unique_id=529680049]
 
@@ -15,3 +16,6 @@ position = Vector2(-7, -55.999985)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277988731]
 position_smoothing_enabled = true
+
+[node name="Node2D2" parent="." unique_id=615002136 groups=["player"] instance=ExtResource("4_ycs6q")]
+position = Vector2(91, -55)

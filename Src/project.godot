@@ -63,6 +63,9 @@ shield={
 
 2d_physics/layer_1="Collision"
 2d_physics/layer_2="Attack"
+2d_physics/layer_3="Player"
+2d_physics/layer_4="Hitbox"
+2d_physics/layer_5="Hurtbox"
 
 [physics]
 

@@ -53,11 +53,6 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			velocity += get_gravity() * delta * character_data.gravity_scale
 			
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = character_data.jump_force
-			
-		velocity.x = Input.get_axis("left", "right") * character_data.walk_speed	
-	# 3. DETECTAR ATAQUES NORMALES (Solo si no estamos en mitad de un dash)
 	if _dash_finished:
 		if _attack_finished and (velocity.x < 0 or velocity.x > 0) and is_on_floor() and Input.is_action_just_pressed("attack"):
 			_attack_finished = false
@@ -101,16 +96,7 @@ func receive_damage(amount: int) -> void:
 	damage_changed.emit(_current_damage)
 
 func _on_hurtbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	print('hurtbox: area entered')
-	print(area)
-
+	pass
 
 func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	if area.owner == self:
-		return # Ignoramos nuestro propio cuerpo
-	
-	print('hitbox: area entered')
-	if (not _attack_finished):
-		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
-		if area.get_parent().has_method("receive_damage"):
-			area.get_parent().receive_damage(5)
+	pass
