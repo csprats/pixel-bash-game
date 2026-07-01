@@ -63,10 +63,20 @@ func _physics_process(delta: float) -> void:
 			_attack_finished = false
 			_body.play('Run_Attack')
 			_weapon.play('Run_Attack')
+			
+			# Despierta la colisión en movimiento
+			$Hitbox.monitoring = false
+			$Hitbox.monitoring = true
+			
 		elif _attack_finished and is_on_floor() and Input.is_action_just_pressed("attack"):
 			_attack_finished = false  
 			_body.play("Attack")
 			_weapon.play("Attack")
+			
+			# Apagamos y encendemos el monitoreo de la Hitbox. 
+			# Esto obliga a Godot a escanear el área inmediatamente aunque estés quieto.
+			$Hitbox.monitoring = false
+			$Hitbox.monitoring = true
 			
 	if Input.is_key_pressed(KEY_P):
 		receive_damage(1) # Suma 0.5% por cada frame que la pulses
