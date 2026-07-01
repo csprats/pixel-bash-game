@@ -135,5 +135,5 @@ func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index
 	print('hitbox: area entered')
 	if (not _attack_finished):
 		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
-		if area.get_parent().has_method("receive_damage"):
+		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
 			area.get_parent().receive_damage(5)
