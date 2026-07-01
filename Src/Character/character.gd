@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 				add_child(new_ability)
 				new_ability.activate(self)
 
-	# 2. MOVIMIENTO Y FÍSICAS (Solo si NO estamos atacando Y NO estamos en mitad de un dash)
+	# 2. MOVIMIENTO Y FÍSICAS
 	if _attack_finished and _dash_finished:
 		if not is_on_floor():
 			velocity += get_gravity() * delta * character_data.gravity_scale
@@ -57,6 +57,19 @@ func _physics_process(delta: float) -> void:
 			velocity.y = character_data.jump_force
 			
 		velocity.x = Input.get_axis("left", "right") * character_data.walk_speed	
+	else:
+		if is_on_floor():
+			# Leemos los botones de caminar en tiempo real
+			var direccion_actual := Input.get_axis("left", "right")
+			
+			# Si dejas de pulsar el botón de caminar MIENTRAS atacas en carrera...
+			if _body.animation == "Run_Attack" and direccion_actual == 0:
+				# Lo frenamos en seco (o puedes usar velocity.x *= 0.7 para que decelere rápido)
+				velocity.x = 0
+				_body.play("Idle")
+				_weapon.play("Idle")
+				_attack_finished = true
+				
 	# 3. DETECTAR ATAQUES NORMALES (Solo si no estamos en mitad de un dash)
 	if _dash_finished:
 		if _attack_finished and (velocity.x < 0 or velocity.x > 0) and is_on_floor() and Input.is_action_just_pressed("attack"):
