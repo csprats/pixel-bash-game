@@ -113,6 +113,28 @@ func _physics_process(delta: float) -> void:
 	# 6. APLICAR MOVIMIENTO
 	move_and_slide()
 
+	# 7. WRAP-AROUND: reaparecer por la pared opuesta
+	_wrap_around_screen()
+
+# Si el personaje cruza un borde lateral, reaparece por el borde opuesto.
+func _wrap_around_screen() -> void:
+	var camera := get_viewport().get_camera_2d()
+	if not camera:
+		return
+
+	# Ancho visible en unidades de mundo (tiene en cuenta el zoom de la cámara)
+	var view_width := get_viewport_rect().size.x / camera.zoom.x
+	var center_x := camera.get_screen_center_position().x
+	var left := center_x - view_width / 2.0
+	var right := center_x + view_width / 2.0
+
+	# Desplazamos exactamente un ancho de pantalla: sin parpadeo, el personaje
+	# reaparece a la misma profundidad por el lado contrario.
+	if global_position.x < left:
+		global_position.x += view_width
+	elif global_position.x > right:
+		global_position.x -= view_width
+
 func _on_body_animation_finished() -> void:
 	if _body.animation == "Attack" or _body.animation == "Run_Attack":
 		_attack_finished = true
