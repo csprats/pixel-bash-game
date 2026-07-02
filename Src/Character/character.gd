@@ -4,6 +4,14 @@ signal damage_changed(new_damage: float)
 
 @export var character_data: CharacterData
 
+enum ControlMode { HUMAN, AI }
+
+## Quién controla este luchador: un humano con teclado o la IA.
+@export var control_mode: ControlMode = ControlMode.HUMAN
+## Número de jugador (1-4). Selecciona el keyset: las acciones de este slot
+## son "<accion>_p" + player_id (p.ej. player_id 2 -> jump_p2, left_p2...).
+@export_range(1, 4) var player_id: int = 1
+
 @onready var _body: AnimatedSprite2D = $Body
 @onready var _weapon: AnimatedSprite2D = $Weapon
 
@@ -17,6 +25,10 @@ var _current_damage: int = 0
 var _instanced_abilities: Array[Node] = []
 
 func _ready() -> void:
+	# Las acciones de este slot deben existir en el Input Map.
+	for a in ["jump", "left", "right", "attack", "dash", "shield", "proyectile"]:
+		assert(InputMap.has_action(_action(a)), "Falta accion de input: " + _action(a))
+
 	if character_data:
 		if character_data.body_animations:
 			_body.sprite_frames = character_data.body_animations
@@ -35,6 +47,23 @@ func _ready() -> void:
 					var new_ability = ability_script.new()
 					add_child(new_ability)
 					_instanced_abilities.append(new_ability)
+
+# --- LECTURA DE INPUT (parametrizada por slot) ---
+# Traduce una acción base al keyset de este slot ("jump" -> "jump_p2").
+func _action(base: String) -> String:
+	return base + "_p" + str(player_id)
+
+# Devuelve si se acaba de pulsar la acción de este slot. La IA nunca "pulsa".
+func _pressed(base: String) -> bool:
+	if control_mode == ControlMode.AI:
+		return false
+	return Input.is_action_just_pressed(_action(base))
+
+# Eje horizontal de este slot (-1..1). La IA no aporta input de movimiento.
+func _axis() -> float:
+	if control_mode == ControlMode.AI:
+		return 0.0
+	return Input.get_axis(_action("left"), _action("right"))
 
 func _physics_process(delta: float) -> void:
 	if not character_data:
@@ -58,7 +87,7 @@ func _physics_process(delta: float) -> void:
 				new_ability.activate(self)'''
 	if _attack_finished and _dash_finished and is_on_floor():
 		for ability in _instanced_abilities:
-			if Input.is_action_just_pressed(ability.input_action):
+			if _pressed(ability.input_action):
 				ability.activate(self)
 				break
 
@@ -67,14 +96,14 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			velocity += get_gravity() * delta * character_data.gravity_scale
 			
-		if Input.is_action_just_pressed("jump") and is_on_floor():
+		if _pressed("jump") and is_on_floor():
 			velocity.y = character_data.jump_force
-			
-		velocity.x = Input.get_axis("left", "right") * character_data.walk_speed	
+
+		velocity.x = _axis() * character_data.walk_speed
 	else:
 		if is_on_floor():
 			# Leemos los botones de caminar en tiempo real
-			var direccion_actual := Input.get_axis("left", "right")
+			var direccion_actual := _axis()
 			
 			# Si dejas de pulsar el botón de caminar MIENTRAS atacas en carrera...
 			if _body.animation == "Run_Attack" and direccion_actual == 0:
@@ -86,7 +115,7 @@ func _physics_process(delta: float) -> void:
 				
 	# 3. DETECTAR ATAQUES NORMALES (Solo si no estamos en mitad de un dash)
 	if _dash_finished:
-		if _attack_finished and (velocity.x < 0 or velocity.x > 0) and is_on_floor() and Input.is_action_just_pressed("attack"):
+		if _attack_finished and (velocity.x < 0 or velocity.x > 0) and is_on_floor() and _pressed("attack"):
 			_attack_finished = false
 			_body.play('Run_Attack')
 			_weapon.play('Run_Attack')
@@ -95,7 +124,7 @@ func _physics_process(delta: float) -> void:
 			$Hitbox.monitoring = false
 			$Hitbox.monitoring = true
 			
-		elif _attack_finished and is_on_floor() and Input.is_action_just_pressed("attack"):
+		elif _attack_finished and is_on_floor() and _pressed("attack"):
 			_attack_finished = false  
 			_body.play("Attack")
 			_weapon.play("Attack")
@@ -105,7 +134,9 @@ func _physics_process(delta: float) -> void:
 			$Hitbox.monitoring = false
 			$Hitbox.monitoring = true
 			
-	if Input.is_key_pressed(KEY_P):
+	# Debug: la tecla P es física y global, así que solo la aplicamos al slot de P1
+	# para no dañar a todos los luchadores a la vez.
+	if control_mode == ControlMode.HUMAN and player_id == 1 and Input.is_key_pressed(KEY_P):
 		receive_damage(1) # Suma 0.5% por cada frame que la pulses
 
 	# 4. CONTROL DE ANIMACIONES DE MOVIMIENTO
@@ -119,7 +150,7 @@ func _physics_process(delta: float) -> void:
 	
 	# 5. DIRECCIÓN DEL SPRITE (No permitimos girar en mitad del dash)
 	if _dash_finished:
-		var direccion := Input.get_axis("left", "right")
+		var direccion := _axis()
 		if direccion != 0:
 			_body.scale.x = direccion
 			_weapon.scale.x = direccion
