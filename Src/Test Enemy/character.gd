@@ -92,8 +92,30 @@ func _on_body_animation_finished() -> void:
 # Esta función procesará el daño que nos hagan
 func receive_damage(amount: int) -> void:
 	_current_damage += amount
-	
+
 	damage_changed.emit(_current_damage)
+	_play_hit_flash()
+	_apply_hitstop()
+
+# --- EFECTOS VISUALES ---
+func _play_hit_flash() -> void:
+	# Destello rojo breve al recibir un golpe (visible sobre cualquier sprite).
+	modulate = Color(1, 0.25, 0.25, 1)
+	# ignore_time_scale = true para que el timer avance aunque el juego esté congelado.
+	await get_tree().create_timer(0.15, true, false, true).timeout
+	modulate = Color(1, 1, 1, 1)
+
+func _apply_hitstop(duration: float = 0.08) -> void:
+	# Micro-congelación global para dar peso al impacto.
+	Engine.time_scale = 0.0
+	await get_tree().create_timer(duration, true, false, true).timeout
+	Engine.time_scale = 1.0
+
+func _play_ready_flash() -> void:
+	# Destello verde breve: una habilidad vuelve a estar disponible
+	modulate = Color(0.5, 1.0, 0.5, 1)
+	await get_tree().create_timer(0.25, true, false, true).timeout
+	modulate = Color(1, 1, 1, 1)
 
 func _on_hurtbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	pass
