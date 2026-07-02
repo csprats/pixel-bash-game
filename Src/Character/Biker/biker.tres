@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bedvy02wa0skg" path="res://Abilities/dash.gd" id="3_6qoyw"]
 [ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_im0nh"]
 [ext_resource type="Script" uid="uid://dfevifalhtlam" path="res://Abilities/shield.gd" id="4_7di27"]
+[ext_resource type="Script" uid="uid://5rltuhv36tk7" path="res://Abilities/proyectile.gd" id="6_am2sj"]
 
 [resource]
 script = ExtResource("2_wslwi")
@@ -18,5 +19,5 @@ jump_force = -350.0
 body_animations = ExtResource("1_im0nh")
 weapon_animations = ExtResource("3_im0nh")
 shield_cooldown = 5.0
-special_abilities = Array[GDScript]([ExtResource("3_6qoyw"), ExtResource("4_7di27")])
+special_abilities = Array[GDScript]([ExtResource("3_6qoyw"), ExtResource("4_7di27"), ExtResource("6_am2sj")])
 metadata/_custom_type_script = "uid://4au8kg10088b"

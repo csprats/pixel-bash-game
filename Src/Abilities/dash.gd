@@ -2,6 +2,7 @@ extends Ability
 
 var dash_force: float 
 var dash_duration: float
+var input_action: String = 'dash'
 
 func activate(player: CharacterBody2D) -> void:
 	dash_force = player.character_data.dash_speed
@@ -29,5 +30,3 @@ func activate(player: CharacterBody2D) -> void:
 	# 6. Al terminar el tiempo, frenamos y abrimos el pestillo correcto
 	player.velocity.x = 0
 	player._dash_finished = true
-	
-	queue_free()

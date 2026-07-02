@@ -1,6 +1,7 @@
 extends Ability
 
 var shield_duration: float
+var input_action: String = 'shield'
 
 func activate(player: CharacterBody2D) -> void:
 	if (player._is_invincible): return
