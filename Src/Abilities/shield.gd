@@ -18,5 +18,6 @@ func activate(player: CharacterBody2D) -> void:
 	
 	var cooldown = player.get_tree().create_timer(player.character_data.shield_cooldown)
 	await cooldown.timeout
-	
+
 	player._is_invincible = false # Desactivar la invencibilidad
+	player._play_ready_flash()    # Aviso visual: escudo listo de nuevo
