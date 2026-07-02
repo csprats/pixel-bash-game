@@ -14,6 +14,8 @@ var _is_invincible: bool = false
 
 var _current_damage: int = 0
 
+var _instanced_abilities: Array[Node] = []
+
 func _ready() -> void:
 	if character_data:
 		if character_data.body_animations:
@@ -26,6 +28,13 @@ func _ready() -> void:
 		
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
+		
+		if character_data and character_data.special_abilities:
+			for ability_script in character_data.special_abilities:
+				if ability_script:
+					var new_ability = ability_script.new()
+					add_child(new_ability)
+					_instanced_abilities.append(new_ability)
 
 func _physics_process(delta: float) -> void:
 	if not character_data:
@@ -33,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	
 	# 1. DETECTAR ATAQUE ESPECIAL (DASH)
 	# Comprobamos que no estemos atacando ni haciendo otro dash
-	if _attack_finished and _dash_finished and is_on_floor() and Input.is_action_just_pressed("dash"):
+	'''if _attack_finished and _dash_finished and is_on_floor() and Input.is_action_just_pressed("dash"):
 		if character_data.special_abilities.size() > 0:
 			var ability_script = character_data.special_abilities[0]
 			if ability_script:
@@ -46,7 +55,12 @@ func _physics_process(delta: float) -> void:
 			if ability_script:
 				var new_ability = ability_script.new()
 				add_child(new_ability)
-				new_ability.activate(self)
+				new_ability.activate(self)'''
+	if _attack_finished and _dash_finished and is_on_floor():
+		for ability in _instanced_abilities:
+			if Input.is_action_just_pressed(ability.input_action):
+				ability.activate(self)
+				break
 
 	# 2. MOVIMIENTO Y FÍSICAS
 	if _attack_finished and _dash_finished:
