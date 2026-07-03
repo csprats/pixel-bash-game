@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ctpenyfdyy4n4"]
+
+[ext_resource type="Script" uid="uid://bpgu08ymmfly1" path="res://Levels/Main Menu/menu_controller.gd" id="1_e2pmq"]
+
+[node name="Main Menu" type="Control" unique_id=208704291 node_paths=PackedStringArray("button_play")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 135.0
+offset_top = 70.0
+offset_right = 135.0
+offset_bottom = 70.0
+script = ExtResource("1_e2pmq")
+button_play = NodePath("VBoxContainer/ButtonPlay")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=765920869]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonPlay" type="Button" parent="VBoxContainer" unique_id=1299047106]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonExit")
+
+[node name="ButtonExit" type="Button" parent="VBoxContainer" unique_id=556766247]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ButtonPlay")
+
+[connection signal="pressed" from="VBoxContainer/ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonExit" to="." method="_on_button_exit_pressed"]
