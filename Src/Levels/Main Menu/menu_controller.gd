@@ -1,6 +1,6 @@
 extends Control
 
-@export var button_play: Button
+@export var button_play: TextureButton
 
 func _ready() -> void:
 	# Hace que el botón de Jugar esté seleccionado al arrancar con el mando
