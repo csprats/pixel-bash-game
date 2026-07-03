@@ -20,6 +20,9 @@ enum ControlMode { HUMAN, AI }
 # Estados de control
 var _attack_finished: bool = true
 var _dash_finished: bool = true
+# Pestillo de empuje: mientras es false, el knockback controla la velocidad y
+# el jugador no puede moverse/atacar (como el dash).
+var _knockback_finished: bool = true
 var _is_invincible: bool = false
 var _shield_on_cooldown: bool = false
 # Seguimiento del cooldown del escudo para alimentar el indicador de la UI.
@@ -92,22 +95,27 @@ func _physics_process(delta: float) -> void:
 				var new_ability = ability_script.new()
 				add_child(new_ability)
 				new_ability.activate(self)'''
-	if _attack_finished and _dash_finished and is_on_floor():
+	if _attack_finished and _dash_finished and _knockback_finished and is_on_floor():
 		for ability in _instanced_abilities:
 			if _pressed(ability.input_action):
 				ability.activate(self)
 				break
 
 	# 2. MOVIMIENTO Y FÍSICAS
-	if _attack_finished and _dash_finished:
+	if _attack_finished and _dash_finished and _knockback_finished:
 		if not is_on_floor():
 			velocity += get_gravity() * delta * character_data.gravity_scale
-			
+
 		if _pressed("jump") and is_on_floor():
 			velocity.y = character_data.jump_force
 
 		velocity.x = _axis() * character_data.walk_speed
 	else:
+		# Durante el empuje seguimos aplicando gravedad en el aire para que el
+		# pequeño salto del knockback describa un arco y caiga de forma natural,
+		# sin quedarse flotando. No leemos input de movimiento aquí.
+		if not _knockback_finished and not is_on_floor():
+			velocity += get_gravity() * delta * character_data.gravity_scale
 		if is_on_floor():
 			# Leemos los botones de caminar en tiempo real
 			var direccion_actual := _axis()
@@ -120,8 +128,8 @@ func _physics_process(delta: float) -> void:
 				_weapon.play("Idle")
 				_attack_finished = true
 				
-	# 3. DETECTAR ATAQUES NORMALES (Solo si no estamos en mitad de un dash)
-	if _dash_finished:
+	# 3. DETECTAR ATAQUES NORMALES (Solo si no estamos en mitad de un dash o empuje)
+	if _dash_finished and _knockback_finished:
 		if _attack_finished and (velocity.x < 0 or velocity.x > 0) and is_on_floor() and _pressed("attack"):
 			_attack_finished = false
 			_body.play('Run_Attack')
@@ -149,7 +157,7 @@ func _physics_process(delta: float) -> void:
 		receive_damage(1) # Suma 0.5% por cada frame que la pulses
 
 	# 4. CONTROL DE ANIMACIONES DE MOVIMIENTO
-	if _attack_finished and _dash_finished:
+	if _attack_finished and _dash_finished and _knockback_finished:
 		if (velocity.x < 0 or velocity.x > 0):
 			_body.play("Run")
 			_weapon.play("Run")
@@ -157,8 +165,8 @@ func _physics_process(delta: float) -> void:
 			_body.play("Idle")
 			_weapon.play("Idle")
 	
-	# 5. DIRECCIÓN DEL SPRITE (No permitimos girar en mitad del dash)
-	if _dash_finished:
+	# 5. DIRECCIÓN DEL SPRITE (No permitimos girar en mitad del dash ni del empuje)
+	if _dash_finished and _knockback_finished:
 		var direccion := _axis()
 		if direccion != 0:
 			_body.scale.x = direccion
@@ -221,13 +229,31 @@ func _on_body_animation_finished() -> void:
 	if _body.animation == "Attack" or _body.animation == "Run_Attack":
 		_attack_finished = true
 		
-# Esta función procesará el daño que nos hagan
-func receive_damage(amount: int) -> void:
+# Esta función procesará el daño que nos hagan.
+# knockback_dir: dirección horizontal del empuje (+1 derecha, -1 izquierda).
+# 0.0 (por defecto) significa sin empuje (p.ej. el daño de depuración con P).
+func receive_damage(amount: int, knockback_dir: float = 0.0) -> void:
 	_current_damage += amount
 
 	damage_changed.emit(_current_damage)
 	_play_hit_flash()
 	_apply_hitstop()
+	if knockback_dir != 0.0:
+		_apply_knockback(knockback_dir)
+
+# Empuje al recibir daño (estilo Smash): la magnitud crece con el daño ya
+# acumulado y se divide por el peso del personaje. Reutiliza el patrón del dash:
+# ponemos un pestillo, escribimos la velocidad, esperamos y liberamos.
+func _apply_knockback(dir: float) -> void:
+	_knockback_finished = false
+	var w := maxf(character_data.weight, 0.1)
+	var magnitude := (character_data.knockback_base + _current_damage * character_data.knockback_scale) / w
+	velocity.x = signf(dir) * magnitude
+	velocity.y = character_data.knockback_pop / w
+	# Timer normal (no ignora time_scale): no empieza a contar hasta que acaba
+	# el hitstop de 0.08s, así el empuje arranca justo al descongelarse el golpe.
+	await get_tree().create_timer(character_data.knockback_duration).timeout
+	_knockback_finished = true
 
 # --- EFECTOS VISUALES ---
 func _play_hit_flash() -> void:
@@ -264,4 +290,5 @@ func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index
 	if (not _attack_finished):
 		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
 		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
-			area.get_parent().receive_damage(5)
+			# Empujamos a la víctima hacia donde mira el atacante (self).
+			area.get_parent().receive_damage(5, _body.scale.x)
