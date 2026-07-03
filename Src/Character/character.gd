@@ -19,6 +19,7 @@ enum ControlMode { HUMAN, AI }
 var _attack_finished: bool = true
 var _dash_finished: bool = true
 var _is_invincible: bool = false
+var _shield_on_cooldown: bool = false
 
 var _current_damage: int = 0
 
@@ -136,7 +137,9 @@ func _physics_process(delta: float) -> void:
 			
 	# Debug: la tecla P es física y global, así que solo la aplicamos al slot de P1
 	# para no dañar a todos los luchadores a la vez.
-	if control_mode == ControlMode.HUMAN and player_id == 1 and Input.is_key_pressed(KEY_P):
+	# Respeta la invencibilidad (p.ej. escudo) igual que el dano real, para que
+	# sirva como prueba: mientras el escudo este activo, P no debe hacer dano.
+	if control_mode == ControlMode.HUMAN and player_id == 1 and Input.is_key_pressed(KEY_P) and not _is_invincible:
 		receive_damage(1) # Suma 0.5% por cada frame que la pulses
 
 	# 4. CONTROL DE ANIMACIONES DE MOVIMIENTO
