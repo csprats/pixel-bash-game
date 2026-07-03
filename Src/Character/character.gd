@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 signal damage_changed(new_damage: float)
+## Progreso de recarga del escudo (0 = recien gastado, 100 = listo de nuevo).
+signal shield_cooldown_changed(progress: float)
 
 @export var character_data: CharacterData
 
@@ -20,6 +22,10 @@ var _attack_finished: bool = true
 var _dash_finished: bool = true
 var _is_invincible: bool = false
 var _shield_on_cooldown: bool = false
+# Seguimiento del cooldown del escudo para alimentar el indicador de la UI.
+# shield.gd conmuta _shield_on_cooldown; aqui medimos el tiempo transcurrido.
+var _was_on_cooldown: bool = false
+var _shield_cooldown_elapsed: float = 0.0
 
 var _current_damage: int = 0
 
@@ -164,6 +170,9 @@ func _physics_process(delta: float) -> void:
 	# 7. WRAP-AROUND: reaparecer por la pared opuesta
 	_wrap_around_screen()
 
+	# 8. INDICADOR DE COOLDOWN DEL ESCUDO
+	_update_shield_cooldown(delta)
+
 # Si el personaje cruza un borde lateral, reaparece por el borde opuesto.
 func _wrap_around_screen() -> void:
 	var camera := get_viewport().get_camera_2d()
@@ -182,6 +191,31 @@ func _wrap_around_screen() -> void:
 		global_position.x += view_width
 	elif global_position.x > right:
 		global_position.x -= view_width
+
+# Alimenta el indicador de escudo de la UI. Fases (shield.gd conmuta los flags):
+#   escudo activo (_is_invincible)   -> barra vacia (0)
+#   recarga (_shield_on_cooldown)    -> se rellena de 0 a 100 con el tiempo
+#   listo de nuevo                   -> barra llena (100)
+func _update_shield_cooldown(delta: float) -> void:
+	if _is_invincible:
+		# Escudo activo: la barra se vacia en cuanto se levanta y sigue vacia.
+		_was_on_cooldown = false
+		shield_cooldown_changed.emit(0.0)
+	elif _shield_on_cooldown:
+		if not _was_on_cooldown:
+			# Flanco de subida: la recarga acaba de empezar.
+			_was_on_cooldown = true
+			_shield_cooldown_elapsed = 0.0
+		_shield_cooldown_elapsed += delta
+		var total := character_data.shield_cooldown
+		var progress := 100.0
+		if total > 0.0:
+			progress = clampf(_shield_cooldown_elapsed / total * 100.0, 0.0, 100.0)
+		shield_cooldown_changed.emit(progress)
+	elif _was_on_cooldown:
+		# Flanco de bajada: el escudo vuelve a estar listo.
+		_was_on_cooldown = false
+		shield_cooldown_changed.emit(100.0)
 
 func _on_body_animation_finished() -> void:
 	if _body.animation == "Attack" or _body.animation == "Run_Attack":

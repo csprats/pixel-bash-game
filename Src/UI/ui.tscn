@@ -1,39 +1,89 @@
-[gd_scene format=3 uid="uid://n2cq1d2j6dof"]
+[gd_scene load_steps=7 format=3 uid="uid://n2cq1d2j6dof"]
 
 [ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://Assets/PressStart2P-Regular.ttf" id="1_2fwl4"]
 [ext_resource type="Script" uid="uid://ddfjtjdt0fl3t" path="res://UI/ui.gd" id="1_dajm1"]
 
-[node name="Ui" type="CanvasLayer" unique_id=185227116 node_paths=PackedStringArray("damage_label", "player_icon")]
+[sub_resource type="Gradient" id="Gradient_under"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.12, 0.12, 0.16, 0.85, 0.12, 0.12, 0.16, 0.85)
+
+[sub_resource type="GradientTexture2D" id="Tex_under"]
+gradient = SubResource("Gradient_under")
+width = 4
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_progress"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0, 0.6, 1, 1, 0, 0.6, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="Tex_progress"]
+gradient = SubResource("Gradient_progress")
+width = 4
+height = 16
+
+[node name="Ui" type="CanvasLayer" unique_id=185227116 node_paths=PackedStringArray("damage_label", "player_icon", "shield_cooldown_bar")]
 script = ExtResource("1_dajm1")
-damage_label = [NodePath("player_ui"), NodePath("player_ui2")]
-player_icon = [NodePath("player_icon"), NodePath("player_icon2")]
+damage_label = [NodePath("player1_hud/player_ui"), NodePath("player2_hud/player_ui2")]
+player_icon = [NodePath("player1_hud/player_icon"), NodePath("player2_hud/player_icon2")]
+shield_cooldown_bar = [NodePath("player1_hud/player_shield_cd"), NodePath("player2_hud/player_shield_cd2")]
 
-[node name="player_ui2" type="Label" parent="." unique_id=959073821]
-offset_left = 247.0
-offset_top = 149.0
-offset_right = 295.0
-offset_bottom = 172.0
-theme_override_fonts/font = ExtResource("1_2fwl4")
-theme_override_font_sizes/font_size = 8
-text = "0%"
-
-[node name="player_icon2" type="TextureRect" parent="." unique_id=1813310525]
-offset_left = 234.0
-offset_top = 146.0
-offset_right = 244.0
-offset_bottom = 157.0
-
-[node name="player_ui" type="Label" parent="." unique_id=2000607540]
-offset_left = 32.0
-offset_top = 149.0
-offset_right = 80.0
-offset_bottom = 172.0
-theme_override_fonts/font = ExtResource("1_2fwl4")
-theme_override_font_sizes/font_size = 8
-text = "0%"
-
-[node name="player_icon" type="TextureRect" parent="." unique_id=1328920752]
+[node name="player1_hud" type="HBoxContainer" parent="."]
 offset_left = 19.0
-offset_top = 146.0
-offset_right = 29.0
-offset_bottom = 157.0
+offset_top = 145.0
+offset_right = 95.0
+offset_bottom = 161.0
+theme_override_constants/separation = 3
+alignment = 0
+
+[node name="player_icon" type="TextureRect" parent="player1_hud"]
+custom_minimum_size = Vector2(12, 12)
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="player_shield_cd" type="TextureProgressBar" parent="player1_hud"]
+custom_minimum_size = Vector2(4, 14)
+size_flags_vertical = 4
+max_value = 100.0
+value = 100.0
+fill_mode = 3
+texture_under = SubResource("Tex_under")
+texture_progress = SubResource("Tex_progress")
+
+[node name="player_ui" type="Label" parent="player1_hud"]
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_2fwl4")
+theme_override_font_sizes/font_size = 8
+text = "0%"
+
+[node name="player2_hud" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_top = 145.0
+offset_right = -19.0
+offset_bottom = 161.0
+grow_horizontal = 0
+theme_override_constants/separation = 3
+alignment = 2
+
+[node name="player_ui2" type="Label" parent="player2_hud"]
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_2fwl4")
+theme_override_font_sizes/font_size = 8
+text = "0%"
+
+[node name="player_shield_cd2" type="TextureProgressBar" parent="player2_hud"]
+custom_minimum_size = Vector2(4, 14)
+size_flags_vertical = 4
+max_value = 100.0
+value = 100.0
+fill_mode = 3
+texture_under = SubResource("Tex_under")
+texture_progress = SubResource("Tex_progress")
+
+[node name="player_icon2" type="TextureRect" parent="player2_hud"]
+custom_minimum_size = Vector2(12, 12)
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
