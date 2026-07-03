@@ -21,5 +21,6 @@ func _on_area_entered(area: Area2D) -> void:
 		
 	# Si no es nuestro creador, tiene el método de daño y no es invencible... ¡FUEGO!
 	if parent.has_method("receive_damage") and not parent._is_invincible:
-		parent.receive_damage(5)
+		# Empujamos a la víctima en la dirección de vuelo del proyectil.
+		parent.receive_damage(5, direction)
 		queue_free() # Borramos el proyectil al impactar contra el enemigo

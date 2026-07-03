@@ -25,4 +25,13 @@ class_name CharacterData
 @export_group("Habilidades")
 @export var shield_duration: float = 1
 @export var shield_cooldown: float = 2
-@export var special_abilities: Array[GDScript] = [] 
+@export var special_abilities: Array[GDScript] = []
+
+# --- EMPUJE AL RECIBIR DAÑO (KNOCKBACK) ---
+# Al estilo Smash: cuanto más daño acumulado tiene el luchador, más lejos sale
+# despedido. Todo se divide por "weight" (más pesado = menos empuje).
+@export_group("Knockback")
+@export var knockback_base: float = 130.0  # Empuje horizontal con 0% de daño
+@export var knockback_scale: float = 7.0  # Empuje horizontal extra por cada punto de daño acumulado
+@export var knockback_pop: float = -170.0  # Componente vertical (negativo = hacia arriba)
+@export var knockback_duration: float = 0.15  # Cuánto tiempo controla la velocidad el empuje
