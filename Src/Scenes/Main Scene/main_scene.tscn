@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mkgig44x36gf" path="res://Scenes/Main Scene/main_scene.gd" id="1_sr30m"]
 [ext_resource type="PackedScene" uid="uid://n2cq1d2j6dof" path="res://UI/Game UI/ui.tscn" id="3_y38xe"]
+[ext_resource type="Script" path="res://Scenes/Main Scene/camera_controller.gd" id="4_cam"]
 
 [node name="Node2D" type="Node2D" unique_id=529680049 node_paths=PackedStringArray("scene_container")]
 script = ExtResource("1_sr30m")
@@ -11,5 +12,6 @@ scene_container = NodePath("SceneContainer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277988731]
 position_smoothing_enabled = true
+script = ExtResource("4_cam")
 
 [node name="SceneContainer" type="Node" parent="." unique_id=1324025487]
