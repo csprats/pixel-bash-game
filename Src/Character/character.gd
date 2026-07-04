@@ -175,30 +175,18 @@ func _physics_process(delta: float) -> void:
 	# 6. APLICAR MOVIMIENTO
 	move_and_slide()
 
-	# 7. WRAP-AROUND: reaparecer por la pared opuesta
-	_wrap_around_screen()
-
-	# 8. INDICADOR DE COOLDOWN DEL ESCUDO
+	# 7. INDICADOR DE COOLDOWN DEL ESCUDO
 	_update_shield_cooldown(delta)
 
-# Si el personaje cruza un borde lateral, reaparece por el borde opuesto.
-func _wrap_around_screen() -> void:
-	var camera := get_viewport().get_camera_2d()
-	if not camera:
-		return
-
-	# Ancho visible en unidades de mundo (tiene en cuenta el zoom de la cámara)
-	var view_width := get_viewport_rect().size.x / camera.zoom.x
-	var center_x := camera.get_screen_center_position().x
-	var left := center_x - view_width / 2.0
-	var right := center_x + view_width / 2.0
-
-	# Desplazamos exactamente un ancho de pantalla: sin parpadeo, el personaje
-	# reaparece a la misma profundidad por el lado contrario.
-	if global_position.x < left:
-		global_position.x += view_width
-	elif global_position.x > right:
-		global_position.x -= view_width
+# Reaparece en el punto indicado (lo llama el gestor de la arena cuando el
+# luchador sale de los límites por un agujero o lo empujan fuera del escenario).
+func respawn(pos: Vector2) -> void:
+	global_position = pos
+	velocity = Vector2.ZERO
+	_knockback_finished = true  # cancela cualquier empuje en curso
+	# Al morir, el porcentaje de daño acumulado se reinicia (estilo stock).
+	_current_damage = 0
+	damage_changed.emit(_current_damage)
 
 # Alimenta el indicador de escudo de la UI. Fases (shield.gd conmuta los flags):
 #   escudo activo (_is_invincible)   -> barra vacia (0)
