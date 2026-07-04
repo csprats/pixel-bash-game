@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://e6ae0ynmwpu5"]
+
+[ext_resource type="SpriteFrames" uid="uid://3beh6dctsv6g" path="res://Character/Punk/punk_body_frames.tres" id="1_gwm3j"]
+[ext_resource type="Script" uid="uid://4au8kg10088b" path="res://Templates/player.gd" id="1_ypw1e"]
+[ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_8vnf7"]
+[ext_resource type="Script" uid="uid://bedvy02wa0skg" path="res://Abilities/dash.gd" id="3_xmgdv"]
+[ext_resource type="Script" uid="uid://5rltuhv36tk7" path="res://Abilities/proyectile.gd" id="4_kphrs"]
+[ext_resource type="Script" uid="uid://dfevifalhtlam" path="res://Abilities/shield.gd" id="5_8cuhi"]
+
+[resource]
+script = ExtResource("1_ypw1e")
+character_name = "Punk"
+jump_force = -350.0
+body_animations = ExtResource("1_gwm3j")
+weapon_animations = ExtResource("3_8vnf7")
+special_abilities = Array[GDScript]([ExtResource("3_xmgdv"), ExtResource("4_kphrs"), ExtResource("5_8cuhi")])
+metadata/_custom_type_script = "uid://4au8kg10088b"
