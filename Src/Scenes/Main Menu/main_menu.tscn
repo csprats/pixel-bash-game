@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://ctpenyfdyy4n4"]
+
+[ext_resource type="Script" uid="uid://bpgu08ymmfly1" path="res://Scenes/Main Menu/menu_controller.gd" id="1_e2pmq"]
+[ext_resource type="Texture2D" uid="uid://m1ep1xbsvjgy" path="res://UI/Assets/tile_0026.png" id="2_1ajju"]
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="3_7xkbd"]
+[ext_resource type="Texture2D" uid="uid://v25u1qemjfky" path="res://UI/Assets/tile_0027.png" id="4_y0aff"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y0aff"]
+texture = ExtResource("2_1ajju")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(-0.05395031, 2.0364103, 16.145641, 12.060008)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7xkbd"]
+texture = ExtResource("4_y0aff")
+texture_margin_left = 2.0
+texture_margin_top = 3.9527082
+texture_margin_right = 2.0
+texture_margin_bottom = 3.8713453
+region_rect = Rect2(0, 1.9527292, 16, 12.128924)
+
+[node name="Main Menu" type="Control" unique_id=208704291 node_paths=PackedStringArray("button_play")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 152.0
+offset_top = 81.0
+offset_right = 152.0
+offset_bottom = 81.0
+script = ExtResource("1_e2pmq")
+button_play = NodePath("VBoxContainer/ButtonStart")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=765920869]
+layout_mode = 0
+offset_left = -178.0
+offset_top = -95.0
+offset_right = -125.0
+offset_bottom = -43.0
+
+[node name="ButtonStart" type="Button" parent="VBoxContainer" unique_id=41219930]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_7xkbd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_y0aff")
+theme_override_styles/focus = SubResource("StyleBoxTexture_7xkbd")
+text = "start"
+
+[node name="ButtonQuit" type="Button" parent="VBoxContainer" unique_id=418504459]
+texture_filter = 1
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonStart")
+focus_neighbor_bottom = NodePath("../ButtonStart")
+theme_override_fonts/font = ExtResource("3_7xkbd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_y0aff")
+theme_override_styles/focus = SubResource("StyleBoxTexture_7xkbd")
+text = "quit"
+
+[connection signal="pressed" from="VBoxContainer/ButtonStart" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonQuit" to="." method="_on_button_quit_pressed"]

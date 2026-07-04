@@ -19,10 +19,11 @@ func _ready() -> void:
 			var icon = player_icon[i]
 		
 			# Conectamos la señal del jugador con la UI
-			#player.damage_changed.connect(_on_player_damage_changed)
+			# player.damage_changed.connect(_on_player_damage_changed)
 			player.damage_changed.connect(_on_player_damage_changed.bind(text))
 
-			print("UI asignada con éxito al personaje: ", player.character_data.character_name)
+			# Esto se puede activar para que en el LOG salgan los personajes a los que se les ha asignado la UI
+			# print("UI asignada con éxito al personaje: ", player.character_data.character_name)
 
 			icon.texture = player.character_data.character_icon
 

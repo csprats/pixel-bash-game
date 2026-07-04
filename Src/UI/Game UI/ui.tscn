@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://n2cq1d2j6dof"]
+[gd_scene format=3 uid="uid://n2cq1d2j6dof"]
 
-[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://Assets/PressStart2P-Regular.ttf" id="1_2fwl4"]
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="1_2fwl4"]
 [ext_resource type="Script" uid="uid://ddfjtjdt0fl3t" path="res://UI/Game UI/ui.gd" id="1_dajm1"]
 
 [sub_resource type="Gradient" id="Gradient_under"]
