@@ -2,10 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dml0ujfru4vhx" path="res://Tilesets/Tileset.png" id="1_exqq0"]
 [ext_resource type="PackedScene" uid="uid://tl2em8dc6lux" path="res://Character/character.tscn" id="2_512ox"]
-[ext_resource type="PackedScene" uid="uid://n2cq1d2j6dof" path="res://UI/Game UI/ui.tscn" id="3_0l2ba"]
 [ext_resource type="Resource" uid="uid://e6ae0ynmwpu5" path="res://Character/Punk/punk.tres" id="3_fn8h4"]
 [ext_resource type="Resource" uid="uid://deopv2hmm2h2i" path="res://Character/Cyborg/cyborg.tres" id="4_fn8h4"]
-[ext_resource type="Script" path="res://Scenes/Level test/arena.gd" id="5_arena"]
+[ext_resource type="Script" uid="uid://qf2w8l5qoavg" path="res://Scenes/Level test/arena.gd" id="5_arena"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0p6u"]
 texture = ExtResource("1_exqq0")
@@ -763,8 +762,6 @@ tile_set = SubResource("TileSet_n4kqy")
 [node name="Node2D" parent="." unique_id=2078312555 groups=["player"] instance=ExtResource("2_512ox")]
 position = Vector2(-7, -55.999985)
 character_data = ExtResource("3_fn8h4")
-
-[node name="Ui" parent="." unique_id=185227116 instance=ExtResource("3_0l2ba")]
 
 [node name="Node2D2" parent="." unique_id=97608630 groups=["player"] instance=ExtResource("2_512ox")]
 position = Vector2(91, -55)

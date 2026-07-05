@@ -4,7 +4,8 @@ extends Node
 var _container: Node = null
 
 const MENU_SCENE = "res://Scenes/Main Menu/main_menu.tscn"
-const COMBAT_SCENE = "res://Scenes/Level test/level_test.tscn"
+const COMBAT_SCENE_TEST = "res://Scenes/Level test/level_test.tscn"
+const UI_SCENE = "res://UI/Game UI/ui.tscn"
 
 func register_container(container_node: Node) -> void:
 	# La escena principal usará esto para decirle al GameManager dónde meter los mapas
@@ -31,3 +32,16 @@ func change_scene(scene_path: String) -> void:
 	# 4. ¡La metemos dentro del contenedor!
 	_container.add_child(new_scene_instance)
 	print("Escena cambiada con éxito a: ", scene_path)
+	
+	# 5. Si la escena NO es el menú principal, añadimos la UI a la escena
+	if (scene_path != MENU_SCENE):
+		var new_ui_resource = load(UI_SCENE)
+		
+		if not new_ui_resource:
+			print("Error: No se pudo encontrar la ruta de la escena de la UI: ", scene_path)
+			return
+			
+		var new_ui_instance = new_ui_resource.instantiate()
+		
+		_container.add_child(new_ui_instance)
+		print("UI añadida con éxito. Ruta: ", scene_path)

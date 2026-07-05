@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal damage_changed(new_damage: float)
+signal damage_changed(new_damage: int, current_lives: int)
 ## Progreso de recarga del escudo (0 = recien gastado, 100 = listo de nuevo).
 signal shield_cooldown_changed(progress: float)
 
@@ -31,6 +31,7 @@ var _was_on_cooldown: bool = false
 var _shield_cooldown_elapsed: float = 0.0
 
 var _current_damage: int = 0
+var lives: int = 3
 
 var _instanced_abilities: Array[Node] = []
 
@@ -81,20 +82,6 @@ func _physics_process(delta: float) -> void:
 	
 	# 1. DETECTAR ATAQUE ESPECIAL (DASH)
 	# Comprobamos que no estemos atacando ni haciendo otro dash
-	'''if _attack_finished and _dash_finished and is_on_floor() and Input.is_action_just_pressed("dash"):
-		if character_data.special_abilities.size() > 0:
-			var ability_script = character_data.special_abilities[0]
-			if ability_script:
-				var new_ability = ability_script.new()
-				add_child(new_ability)
-				new_ability.activate(self)
-	if _attack_finished and _dash_finished and is_on_floor() and Input.is_action_just_pressed("shield"):
-		if character_data.special_abilities.size() > 0:
-			var ability_script = character_data.special_abilities[1]
-			if ability_script:
-				var new_ability = ability_script.new()
-				add_child(new_ability)
-				new_ability.activate(self)'''
 	if _attack_finished and _dash_finished and _knockback_finished and is_on_floor():
 		for ability in _instanced_abilities:
 			if _pressed(ability.input_action):
@@ -181,12 +168,18 @@ func _physics_process(delta: float) -> void:
 # Reaparece en el punto indicado (lo llama el gestor de la arena cuando el
 # luchador sale de los límites por un agujero o lo empujan fuera del escenario).
 func respawn(pos: Vector2) -> void:
+	if (lives <= 0): 
+		# Aquí podemos llamar a una función de la UI que 
+		# muestre un mensaje de que el otro jugador a ganado
+		queue_free()
+		return
+	lives -= 1
 	global_position = pos
 	velocity = Vector2.ZERO
 	_knockback_finished = true  # cancela cualquier empuje en curso
 	# Al morir, el porcentaje de daño acumulado se reinicia (estilo stock).
 	_current_damage = 0
-	damage_changed.emit(_current_damage)
+	damage_changed.emit(_current_damage, lives)
 
 # Alimenta el indicador de escudo de la UI. Fases (shield.gd conmuta los flags):
 #   escudo activo (_is_invincible)   -> barra vacia (0)
@@ -223,7 +216,7 @@ func _on_body_animation_finished() -> void:
 func receive_damage(amount: int, knockback_dir: float = 0.0) -> void:
 	_current_damage += amount
 
-	damage_changed.emit(_current_damage)
+	damage_changed.emit(_current_damage, lives)
 	_play_hit_flash()
 	_apply_hitstop()
 	if knockback_dir != 0.0:
