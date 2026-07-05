@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-# Hacemos referencia al Label de la pantalla
 @export var damage_label: Array[Label]
 @export var player_icon: Array[TextureRect]
 @export var shield_cooldown_bar: Array[TextureProgressBar]
@@ -35,9 +34,9 @@ func _ready() -> void:
 #func _on_player_damage_changed(new_damage: int) -> void:
 	#damage_label.text = str(new_damage) + "%"
 	
-func _on_player_damage_changed(new_damage: int, label: Label) -> void:
+func _on_player_damage_changed(new_damage: int, current_lives: int, label: Label) -> void:
 	if label:
-		label.text = str(new_damage) + "%"
+		label.text = str(new_damage) + "% | " + str(current_lives) + " ♥"
 
 func _on_player_shield_cooldown_changed(progress: float, bar: TextureProgressBar) -> void:
 	if bar:

@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://ddfjtjdt0fl3t" path="res://UI/Game UI/ui.gd" id="1_dajm1"]
 
 [sub_resource type="Gradient" id="Gradient_under"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0.12, 0.12, 0.16, 0.85, 0.12, 0.12, 0.16, 0.85)
 
 [sub_resource type="GradientTexture2D" id="Tex_under"]
@@ -13,7 +12,6 @@ width = 4
 height = 16
 
 [sub_resource type="Gradient" id="Gradient_progress"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0, 0.6, 1, 1, 0, 0.6, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="Tex_progress"]
@@ -27,63 +25,64 @@ damage_label = [NodePath("player1_hud/player_ui"), NodePath("player2_hud/player_
 player_icon = [NodePath("player1_hud/player_icon"), NodePath("player2_hud/player_icon2")]
 shield_cooldown_bar = [NodePath("player1_hud/player_shield_cd"), NodePath("player2_hud/player_shield_cd2")]
 
-[node name="player1_hud" type="HBoxContainer" parent="."]
-offset_left = 19.0
+[node name="player1_hud" type="HBoxContainer" parent="." unique_id=840119290]
 offset_top = 145.0
-offset_right = 95.0
+offset_right = 110.0
 offset_bottom = 161.0
 theme_override_constants/separation = 3
-alignment = 0
 
-[node name="player_icon" type="TextureRect" parent="player1_hud"]
+[node name="player_icon" type="TextureRect" parent="player1_hud" unique_id=1035160658]
 custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
 size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 5
 
-[node name="player_shield_cd" type="TextureProgressBar" parent="player1_hud"]
+[node name="player_shield_cd" type="TextureProgressBar" parent="player1_hud" unique_id=1770358388]
 custom_minimum_size = Vector2(4, 14)
+layout_mode = 2
 size_flags_vertical = 4
-max_value = 100.0
 value = 100.0
 fill_mode = 3
 texture_under = SubResource("Tex_under")
 texture_progress = SubResource("Tex_progress")
 
-[node name="player_ui" type="Label" parent="player1_hud"]
-size_flags_vertical = 4
+[node name="player_ui" type="Label" parent="player1_hud" unique_id=1074877123]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("1_2fwl4")
 theme_override_font_sizes/font_size = 8
-text = "0%"
+text = "0% | 3 ♥"
 
-[node name="player2_hud" type="HBoxContainer" parent="."]
+[node name="player2_hud" type="HBoxContainer" parent="." unique_id=1310996201]
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -95.0
+offset_left = -109.80499
 offset_top = 145.0
-offset_right = -19.0
+offset_right = 0.19573975
 offset_bottom = 161.0
 grow_horizontal = 0
 theme_override_constants/separation = 3
 alignment = 2
 
-[node name="player_ui2" type="Label" parent="player2_hud"]
-size_flags_vertical = 4
+[node name="player_ui2" type="Label" parent="player2_hud" unique_id=256205695]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("1_2fwl4")
 theme_override_font_sizes/font_size = 8
-text = "0%"
+text = "0% | 3 ♥"
 
-[node name="player_shield_cd2" type="TextureProgressBar" parent="player2_hud"]
+[node name="player_shield_cd2" type="TextureProgressBar" parent="player2_hud" unique_id=1856522515]
 custom_minimum_size = Vector2(4, 14)
+layout_mode = 2
 size_flags_vertical = 4
-max_value = 100.0
 value = 100.0
 fill_mode = 3
 texture_under = SubResource("Tex_under")
 texture_progress = SubResource("Tex_progress")
 
-[node name="player_icon2" type="TextureRect" parent="player2_hud"]
+[node name="player_icon2" type="TextureRect" parent="player2_hud" unique_id=1945510832]
 custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
 size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 5
