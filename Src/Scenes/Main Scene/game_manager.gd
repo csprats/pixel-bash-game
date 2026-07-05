@@ -3,15 +3,38 @@ extends Node
 # Guardaremos una referencia al contenedor donde se inyectan las escenas
 var _container: Node = null
 
+# Rutas de las pantallas del juego (navegación manual a través del contenedor).
 const MENU_SCENE = "res://Scenes/Main Menu/main_menu.tscn"
-const COMBAT_SCENE_TEST = "res://Scenes/Level test/level_test.tscn"
+const MODE_SELECT_SCENE = "res://Scenes/Mode Select/mode_select.tscn"
+const CHARACTER_SELECT_SCENE = "res://Scenes/Character Select/character_select.tscn"
+const LEVEL_SELECT_SCENE = "res://Scenes/Level Select/level_select.tscn"
+const LEVEL_1_SCENE = "res://Scenes/Levels/level_1.tscn"
+const LEVEL_2_SCENE = "res://Scenes/Levels/level_2.tscn"
 const UI_SCENE = "res://UI/Game UI/ui.tscn"
+
+# Modo de juego elegido en el menú: jugador vs jugador o jugador vs CPU.
+enum GameMode { PVP, PVC }
+var game_mode: GameMode = GameMode.PVP
+
+# Personaje elegido en el menú para cada slot. Por defecto Punk (P1) y Cyborg (P2),
+# el emparejamiento clásico. character.gd los lee en su _ready al cargar el nivel.
+var p1_character: CharacterData = preload("res://Character/Punk/punk.tres")
+var p2_character: CharacterData = preload("res://Character/Cyborg/cyborg.tres")
+
+# Devuelve el personaje elegido para un slot (1 o 2), o null si no aplica.
+func get_selected_character(pid: int) -> CharacterData:
+	if pid == 1:
+		return p1_character
+	elif pid == 2:
+		return p2_character
+	return null
 
 func register_container(container_node: Node) -> void:
 	# La escena principal usará esto para decirle al GameManager dónde meter los mapas
 	_container = container_node
 
-func change_scene(scene_path: String) -> void:
+# with_ui: solo los niveles de combate necesitan la HUD; las pantallas de menú no.
+func change_scene(scene_path: String, with_ui: bool = false) -> void:
 	if not _container:
 		print("Error: El SceneContainer no ha sido registrado en el GameManager.")
 		return
@@ -33,8 +56,8 @@ func change_scene(scene_path: String) -> void:
 	_container.add_child(new_scene_instance)
 	print("Escena cambiada con éxito a: ", scene_path)
 	
-	# 5. Si la escena NO es el menú principal, añadimos la UI a la escena
-	if (scene_path != MENU_SCENE):
+	# 5. Solo los niveles de combate llevan la UI; las pantallas de menú no.
+	if with_ui:
 		var new_ui_resource = load(UI_SCENE)
 		
 		if not new_ui_resource:

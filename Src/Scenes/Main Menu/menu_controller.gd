@@ -7,7 +7,7 @@ func _ready() -> void:
 	button_play.grab_focus()
 
 func _on_button_start_pressed() -> void:
-	GameManager.change_scene(GameManager.COMBAT_SCENE_TEST)
+	GameManager.change_scene(GameManager.MODE_SELECT_SCENE)
 
 
 func _on_button_quit_pressed() -> void:

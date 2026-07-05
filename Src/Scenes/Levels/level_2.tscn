@@ -1,10 +1,10 @@
-[gd_scene format=4 uid="uid://bcn4r6y3qf8ke"]
+[gd_scene format=4]
 
 [ext_resource type="Texture2D" uid="uid://dml0ujfru4vhx" path="res://Tilesets/Tileset.png" id="1_exqq0"]
 [ext_resource type="PackedScene" uid="uid://tl2em8dc6lux" path="res://Character/character.tscn" id="2_512ox"]
-[ext_resource type="Resource" uid="uid://e6ae0ynmwpu5" path="res://Character/Punk/punk.tres" id="3_fn8h4"]
+[ext_resource type="Resource" uid="uid://v4184lfdtf2i" path="res://Character/Biker/biker.tres" id="3_fn8h4"]
 [ext_resource type="Resource" uid="uid://deopv2hmm2h2i" path="res://Character/Cyborg/cyborg.tres" id="4_fn8h4"]
-[ext_resource type="Script" uid="uid://qf2w8l5qoavg" path="res://Scenes/Level test/arena.gd" id="5_arena"]
+[ext_resource type="Script" uid="uid://qf2w8l5qoavg" path="res://Scenes/Levels/arena.gd" id="5_arena"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0p6u"]
 texture = ExtResource("1_exqq0")
@@ -752,7 +752,7 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_v0p6u")
 
-[node name="Level 1" type="Node2D" unique_id=545980972]
+[node name="Level 2" type="Node2D" unique_id=545980972]
 script = ExtResource("5_arena")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1213066441]
