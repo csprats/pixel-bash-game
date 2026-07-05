@@ -24,6 +24,8 @@ var _dash_finished: bool = true
 # el jugador no puede moverse/atacar (como el dash).
 var _knockback_finished: bool = true
 var _is_invincible: bool = false
+# Doble salto: disponible una vez por vuelo; se recupera al pisar el suelo.
+var _double_jump_available: bool = true
 var _shield_on_cooldown: bool = false
 # Seguimiento del cooldown del escudo para alimentar el indicador de la UI.
 # shield.gd conmuta _shield_on_cooldown; aqui medimos el tiempo transcurrido.
@@ -92,9 +94,17 @@ func _physics_process(delta: float) -> void:
 	if _attack_finished and _dash_finished and _knockback_finished:
 		if not is_on_floor():
 			velocity += get_gravity() * delta * character_data.gravity_scale
+		else:
+			# En el suelo se recupera el doble salto.
+			_double_jump_available = true
 
-		if _pressed("jump") and is_on_floor():
-			velocity.y = character_data.jump_force
+		if _pressed("jump"):
+			if is_on_floor():
+				velocity.y = character_data.jump_force
+			elif _double_jump_available:
+				# Doble salto (estilo Smash): un impulso extra en el aire.
+				velocity.y = character_data.double_jump_force
+				_double_jump_available = false
 
 		velocity.x = _axis() * character_data.walk_speed
 	else:
@@ -177,6 +187,7 @@ func respawn(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	_knockback_finished = true  # cancela cualquier empuje en curso
+	_double_jump_available = true
 	# Al morir, el porcentaje de daño acumulado se reinicia (estilo stock).
 	_current_damage = 0
 	damage_changed.emit(_current_damage, lives)
