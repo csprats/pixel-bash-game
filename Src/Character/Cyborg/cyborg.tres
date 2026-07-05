@@ -13,6 +13,7 @@ character_name = "Cyborg"
 character_icon = ExtResource("2_dhs75")
 walk_speed = 175.0
 jump_force = -325.0
+double_jump_force = -300.0
 weight = 1.2
 body_animations = ExtResource("1_nd1ef")
 weapon_animations = ExtResource("3_nd1ef")
