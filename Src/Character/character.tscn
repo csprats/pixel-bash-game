@@ -16,6 +16,7 @@ size = Vector2(32, 34)
 collision_layer = 4
 script = ExtResource("1_1l6l2")
 character_data = ExtResource("2_nwtvh")
+attack_delay = 0.35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1565773413]
 position = Vector2(-8, 7)

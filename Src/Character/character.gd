@@ -16,7 +16,7 @@ enum ControlMode { HUMAN, AI }
 
 @onready var _body: AnimatedSprite2D = $Body
 @onready var _weapon: AnimatedSprite2D = $Weapon
-
+@export var attack_delay: float = 0.5
 # Estados de control
 var _attack_finished: bool = true
 var _dash_finished: bool = true
@@ -280,11 +280,6 @@ func _play_ready_flash() -> void:
 	await get_tree().create_timer(0.25, true, false, true).timeout
 	modulate = Color(1, 1, 1, 1)
 
-func _on_hurtbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	print('hurtbox: area entered')
-	print(area)
-
-
 func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	if area.owner == self:
 		return # Ignoramos nuestro propio cuerpo
@@ -294,4 +289,6 @@ func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index
 		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
 		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
 			# Empujamos a la víctima hacia donde mira el atacante (self).
+			if (not _body.animation == "Run_Attack"):
+				await get_tree().create_timer(attack_delay).timeout
 			area.get_parent().receive_damage(5, _body.scale.x)
