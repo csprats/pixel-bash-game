@@ -37,6 +37,12 @@ var lives: int = 3
 
 var _instanced_abilities: Array[Node] = []
 
+# Offset horizontal base del Hurtbox y del collider del cuerpo (los de la
+# escena, calibrados mirando a la derecha). Se reflejan con el giro para que las
+# cajas no se descoloquen al mirar a la izquierda.
+var _hurtbox_base_x: float = 0.0
+var _body_col_base_x: float = 0.0
+
 func _ready() -> void:
 	# Las acciones de este slot deben existir en el Input Map.
 	for a in ["jump", "left", "right", "attack", "dash", "shield", "proyectile"]:
@@ -67,6 +73,14 @@ func _ready() -> void:
 		# afinarlo en caliente editando el .tres con el juego en marcha.
 		var _hb_shape := $Hitbox/CollisionShape2D
 		_hb_shape.shape = _hb_shape.shape.duplicate()
+		# La colocamos ya con su tamaño/posición reales (no la geometría de la
+		# escena) para que no se vea una caja "vieja" hasta el primer golpe.
+		_place_hitbox()
+
+		# Guardamos los offsets del Hurtbox y del collider del cuerpo para poder
+		# reflejarlos al girar.
+		_hurtbox_base_x = $Hurtbox/CollisionShape2D.position.x
+		_body_col_base_x = $CollisionShape2D.position.x
 
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
@@ -187,6 +201,15 @@ func _physics_process(delta: float) -> void:
 		if direccion != 0:
 			_body.scale.x = direccion
 			_weapon.scale.x = direccion
+			# Reflejamos los offsets del Hurtbox y del collider del cuerpo con el
+			# giro para que las cajas sigan cuadradas con el sprite también
+			# mirando a la izquierda.
+			var _lado := signf(_body.scale.x)
+			$Hurtbox/CollisionShape2D.position.x = _hurtbox_base_x * _lado
+			$CollisionShape2D.position.x = _body_col_base_x * _lado
+			# La Hitbox también se refleja para que no muestre una caja
+			# descolocada al girar antes de atacar.
+			_place_hitbox()
 	
 	# 6. APLICAR MOVIMIENTO
 	move_and_slide()
@@ -252,20 +275,25 @@ func _on_body_frame_changed() -> void:
 		return
 	var frame := _body.frame
 	if frame == character_data.attack_active_frame_start:
-		# Colocamos la Hitbox DELANTE, en la dirección a la que mira el personaje
-		# (reflejamos la x con _body.scale.x), para que el golpe coincida con el
-		# alcance del arma y no con el propio cuerpo. Leemos posición y tamaño en
-		# cada golpe para poder afinarlos en caliente editando el .tres.
-		$Hitbox/CollisionShape2D.shape.size = character_data.attack_hitbox_size
-		$Hitbox/CollisionShape2D.position = Vector2(
-			character_data.attack_hitbox_offset.x * signf(_body.scale.x),
-			character_data.attack_hitbox_offset.y)
-		# Entramos en la ventana: apagar+encender fuerza a Godot a escanear el
-		# área de inmediato aunque la víctima ya esté solapada.
+		# Colocamos la Hitbox delante según la dirección de giro y entramos en la
+		# ventana: apagar+encender fuerza a Godot a escanear el área de inmediato
+		# aunque la víctima ya esté solapada.
+		_place_hitbox()
 		$Hitbox.monitoring = false
 		$Hitbox.monitoring = true
 	elif frame < character_data.attack_active_frame_start or frame > character_data.attack_active_frame_end:
 		$Hitbox.monitoring = false
+
+# Coloca la Hitbox DELANTE del personaje, en la dirección a la que mira
+# (reflejando la x con _body.scale.x), y le aplica el tamaño del personaje.
+# Se llama al arrancar, al girar y en cada golpe; leemos posición y tamaño cada
+# vez para poder afinarlos en caliente editando el .tres.
+func _place_hitbox() -> void:
+	var cs := $Hitbox/CollisionShape2D
+	cs.shape.size = character_data.attack_hitbox_size
+	cs.position = Vector2(
+		character_data.attack_hitbox_offset.x * signf(_body.scale.x),
+		character_data.attack_hitbox_offset.y)
 		
 # Esta función procesará el daño que nos hagan.
 # knockback_dir: dirección horizontal del empuje (+1 derecha, -1 izquierda).
