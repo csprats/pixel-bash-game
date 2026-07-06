@@ -21,6 +21,15 @@ class_name CharacterData
 @export var body_animations: SpriteFrames
 @export var weapon_animations: SpriteFrames
 
+# --- VENTANA DE IMPACTO DEL ATAQUE ---
+# Frames (base 0) de la animación de ataque en los que la Hitbox está activa,
+# es decir, cuando el arma "conecta". Fuera de esta ventana la Hitbox no hace
+# daño, así el golpe registra en el frame del swing y no al empezar la animación.
+# Se configura por personaje porque cada SpriteFrames puede tener otro timing.
+@export_group("Ataque")
+@export var attack_active_frame_start: int = 2
+@export var attack_active_frame_end: int = 4
+
 
 @export_group("Habilidades")
 @export var shield_duration: float = 1

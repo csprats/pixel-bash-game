@@ -56,9 +56,17 @@ func _ready() -> void:
 		
 		_body.play("Idle")
 		_weapon.play("Idle")
-		
+
+		# La Hitbox arranca apagada: solo se enciende en los frames de impacto
+		# del ataque (ver _on_body_frame_changed), no al empezar la animación.
+		$Hitbox.monitoring = false
+
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
+		# Escuchamos el avance de frames para activar la Hitbox solo en la
+		# ventana de impacto de la animación de ataque.
+		if not _body.frame_changed.is_connected(_on_body_frame_changed):
+			_body.frame_changed.connect(_on_body_frame_changed)
 		
 		if character_data and character_data.special_abilities:
 			for ability_script in character_data.special_abilities:
@@ -142,21 +150,14 @@ func _physics_process(delta: float) -> void:
 			_attack_finished = false
 			_body.play('Run_Attack')
 			_weapon.play('Run_Attack')
-			
-			# Despierta la colisión en movimiento
-			$Hitbox.monitoring = false
-			$Hitbox.monitoring = true
-			
+			# La Hitbox la encenderá _on_body_frame_changed en la ventana de impacto.
+
 		elif _attack_finished and is_on_floor() and _pressed("attack"):
-			_attack_finished = false  
+			_attack_finished = false
 			_body.play("Attack")
 			_weapon.play("Attack")
-			
-			# Apagamos y encendemos el monitoreo de la Hitbox. 
-			# Esto obliga a Godot a escanear el área inmediatamente aunque estés quieto.
-			$Hitbox.monitoring = false
-			$Hitbox.monitoring = true
-			
+			# La Hitbox la encenderá _on_body_frame_changed en la ventana de impacto.
+
 	# Debug: la tecla P es física y global, así que solo la aplicamos al slot de P1
 	# para no dañar a todos los luchadores a la vez.
 	# Respeta la invencibilidad (p.ej. escudo) igual que el dano real, para que
@@ -231,6 +232,25 @@ func _update_shield_cooldown(delta: float) -> void:
 func _on_body_animation_finished() -> void:
 	if _body.animation == "Attack" or _body.animation == "Run_Attack":
 		_attack_finished = true
+		# El ataque acabó: nos aseguramos de dejar la Hitbox apagada.
+		$Hitbox.monitoring = false
+
+# Activa la Hitbox solo durante la ventana de impacto del ataque (los frames en
+# que el arma conecta). Así el daño se aplica en el frame del swing y no al
+# empezar la animación, y las comprobaciones (escudo, alcance) se hacen en vivo.
+func _on_body_frame_changed() -> void:
+	if _attack_finished:
+		return
+	if _body.animation != "Attack" and _body.animation != "Run_Attack":
+		return
+	var frame := _body.frame
+	if frame == character_data.attack_active_frame_start:
+		# Entramos en la ventana: apagar+encender fuerza a Godot a escanear el
+		# área de inmediato aunque la víctima ya esté solapada.
+		$Hitbox.monitoring = false
+		$Hitbox.monitoring = true
+	elif frame < character_data.attack_active_frame_start or frame > character_data.attack_active_frame_end:
+		$Hitbox.monitoring = false
 		
 # Esta función procesará el daño que nos hagan.
 # knockback_dir: dirección horizontal del empuje (+1 derecha, -1 izquierda).
@@ -280,16 +300,10 @@ func _play_ready_flash() -> void:
 	await get_tree().create_timer(0.25, true, false, true).timeout
 	modulate = Color(1, 1, 1, 1)
 
-func _on_hurtbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	print('hurtbox: area entered')
-	print(area)
-
-
 func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	if area.owner == self:
 		return # Ignoramos nuestro propio cuerpo
-	
-	print('hitbox: area entered')
+
 	if (not _attack_finished):
 		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
 		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
