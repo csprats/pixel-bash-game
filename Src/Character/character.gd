@@ -42,6 +42,12 @@ func _ready() -> void:
 	for a in ["jump", "left", "right", "attack", "dash", "shield", "proyectile"]:
 		assert(InputMap.has_action(_action(a)), "Falta accion de input: " + _action(a))
 
+	# Si el menú ha elegido un personaje para este slot, tiene prioridad sobre el
+	# character_data que traiga la instancia en la escena del nivel.
+	var chosen: CharacterData = GameManager.get_selected_character(player_id)
+	if chosen:
+		character_data = chosen
+
 	if character_data:
 		if character_data.body_animations:
 			_body.sprite_frames = character_data.body_animations
@@ -60,6 +66,11 @@ func _ready() -> void:
 					var new_ability = ability_script.new()
 					add_child(new_ability)
 					_instanced_abilities.append(new_ability)
+
+# Marca este luchador como controlado por la CPU (modo jugador vs CPU).
+# La arena lo llama al cargar el nivel según el modo elegido en el menú.
+func set_as_cpu() -> void:
+	control_mode = ControlMode.AI
 
 # --- LECTURA DE INPUT (parametrizada por slot) ---
 # Traduce una acción base al keyset de este slot ("jump" -> "jump_p2").

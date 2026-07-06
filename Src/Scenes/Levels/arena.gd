@@ -24,6 +24,12 @@ func _ready() -> void:
 	for p in get_tree().get_nodes_in_group("player"):
 		_spawn_points[p] = (p as Node2D).global_position
 
+	# En modo jugador vs CPU, el jugador 2 pasa a estar controlado por la IA.
+	if GameManager.game_mode == GameManager.GameMode.PVC:
+		for p in get_tree().get_nodes_in_group("player"):
+			if p.player_id == 2:
+				p.set_as_cpu()
+
 # Deriva los límites de muerte a partir del área ocupada por el tilemap,
 # expandida por blast_margin en los cuatro lados.
 func _compute_bounds_from_tilemap() -> Rect2:
