@@ -62,11 +62,11 @@ func _ready() -> void:
 		$Hitbox.monitoring = false
 
 		# Los SubResource de una escena se comparten entre instancias, así que
-		# duplicamos la forma para que cada luchador tenga la suya y aplicamos el
-		# tamaño de golpe del personaje (data-driven).
+		# duplicamos la forma para que cada luchador tenga la suya. El tamaño se
+		# aplica en cada golpe (ver _on_body_frame_changed), no aquí, para poder
+		# afinarlo en caliente editando el .tres con el juego en marcha.
 		var _hb_shape := $Hitbox/CollisionShape2D
 		_hb_shape.shape = _hb_shape.shape.duplicate()
-		_hb_shape.shape.size = character_data.attack_hitbox_size
 
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
@@ -254,7 +254,9 @@ func _on_body_frame_changed() -> void:
 	if frame == character_data.attack_active_frame_start:
 		# Colocamos la Hitbox DELANTE, en la dirección a la que mira el personaje
 		# (reflejamos la x con _body.scale.x), para que el golpe coincida con el
-		# alcance del arma y no con el propio cuerpo.
+		# alcance del arma y no con el propio cuerpo. Leemos posición y tamaño en
+		# cada golpe para poder afinarlos en caliente editando el .tres.
+		$Hitbox/CollisionShape2D.shape.size = character_data.attack_hitbox_size
 		$Hitbox/CollisionShape2D.position = Vector2(
 			character_data.attack_hitbox_offset.x * signf(_body.scale.x),
 			character_data.attack_hitbox_offset.y)
