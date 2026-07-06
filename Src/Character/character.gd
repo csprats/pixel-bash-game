@@ -61,6 +61,13 @@ func _ready() -> void:
 		# del ataque (ver _on_body_frame_changed), no al empezar la animación.
 		$Hitbox.monitoring = false
 
+		# Los SubResource de una escena se comparten entre instancias, así que
+		# duplicamos la forma para que cada luchador tenga la suya y aplicamos el
+		# tamaño de golpe del personaje (data-driven).
+		var _hb_shape := $Hitbox/CollisionShape2D
+		_hb_shape.shape = _hb_shape.shape.duplicate()
+		_hb_shape.shape.size = character_data.attack_hitbox_size
+
 		if not _body.animation_finished.is_connected(_on_body_animation_finished):
 			_body.animation_finished.connect(_on_body_animation_finished)
 		# Escuchamos el avance de frames para activar la Hitbox solo en la
@@ -245,6 +252,12 @@ func _on_body_frame_changed() -> void:
 		return
 	var frame := _body.frame
 	if frame == character_data.attack_active_frame_start:
+		# Colocamos la Hitbox DELANTE, en la dirección a la que mira el personaje
+		# (reflejamos la x con _body.scale.x), para que el golpe coincida con el
+		# alcance del arma y no con el propio cuerpo.
+		$Hitbox/CollisionShape2D.position = Vector2(
+			character_data.attack_hitbox_offset.x * signf(_body.scale.x),
+			character_data.attack_hitbox_offset.y)
 		# Entramos en la ventana: apagar+encender fuerza a Godot a escanear el
 		# área de inmediato aunque la víctima ya esté solapada.
 		$Hitbox.monitoring = false
