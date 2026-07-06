@@ -1,76 +1,44 @@
-[gd_scene format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://Scenes/Mode Select/mode_select.gd" id="1_mode"]
-[ext_resource type="Texture2D" uid="uid://m1ep1xbsvjgy" path="res://UI/Assets/tile_0026.png" id="2_norm"]
-[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="3_font"]
-[ext_resource type="Texture2D" uid="uid://v25u1qemjfky" path="res://UI/Assets/tile_0027.png" id="4_focus"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_norm"]
-texture = ExtResource("2_norm")
-texture_margin_left = 3.0
-texture_margin_top = 2.0
-texture_margin_right = 3.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(-0.05395031, 2.0364103, 16.145641, 12.060008)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_focus"]
-texture = ExtResource("4_focus")
-texture_margin_left = 2.0
-texture_margin_top = 3.9527082
-texture_margin_right = 2.0
-texture_margin_bottom = 3.8713453
-region_rect = Rect2(0, 1.9527292, 16, 12.128924)
+[ext_resource type="Theme" path="res://UI/menu_theme.tres" id="2_theme"]
 
 [node name="Mode Select" type="Control" node_paths=PackedStringArray("button_first")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 152.0
-offset_top = 81.0
-offset_right = 152.0
-offset_bottom = 81.0
+theme = ExtResource("2_theme")
 script = ExtResource("1_mode")
-button_first = NodePath("VBoxContainer/ButtonPvP")
+button_first = NodePath("CenterContainer/VBoxContainer/ButtonPvP")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = -178.0
-offset_top = -95.0
-offset_right = -125.0
-offset_bottom = -25.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ButtonPvP" type="Button" parent="VBoxContainer"]
-texture_filter = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ButtonPvP" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonBack")
 focus_neighbor_bottom = NodePath("../ButtonPvC")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxTexture_norm")
-theme_override_styles/focus = SubResource("StyleBoxTexture_focus")
 text = "1 vs 1"
 
-[node name="ButtonPvC" type="Button" parent="VBoxContainer"]
-texture_filter = 1
+[node name="ButtonPvC" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonPvP")
 focus_neighbor_bottom = NodePath("../ButtonBack")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxTexture_norm")
-theme_override_styles/focus = SubResource("StyleBoxTexture_focus")
 text = "1 vs cpu"
 
-[node name="ButtonBack" type="Button" parent="VBoxContainer"]
-texture_filter = 1
+[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonPvC")
 focus_neighbor_bottom = NodePath("../ButtonPvP")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxTexture_norm")
-theme_override_styles/focus = SubResource("StyleBoxTexture_focus")
 text = "back"
 
-[connection signal="pressed" from="VBoxContainer/ButtonPvP" to="." method="_on_button_pvp_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonPvC" to="." method="_on_button_pvc_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonBack" to="." method="_on_button_back_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonPvP" to="." method="_on_button_pvp_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonPvC" to="." method="_on_button_pvc_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonBack" to="." method="_on_button_back_pressed"]
