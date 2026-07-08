@@ -43,6 +43,27 @@ var _instanced_abilities: Array[Node] = []
 var _hurtbox_base_x: float = 0.0
 var _body_col_base_x: float = 0.0
 
+# --- IA (modo CPU) ---
+# Intención de movimiento/pulsaciones que la IA fabrica cada frame; _axis()/
+# _pressed() las leen en modo AI para reutilizar toda la máquina de estados.
+var _ai_axis: float = 0.0
+var _ai_pressed: Dictionary = {}          # base -> true si "se pulsa" este frame
+var _ai_attack_cooldown: float = 0.0
+var _ai_jump_cooldown: float = 0.0
+var _ai_special_cooldown: float = 0.0
+
+const AI_ATTACK_RANGE := 70.0             # distancia horizontal para golpear
+const AI_VERTICAL_TOLERANCE := 45.0       # mismo "nivel" para atacar
+const AI_JUMP_TRIGGER := 40.0             # rival por encima -> saltar
+const AI_ATTACK_INTERVAL := 0.45          # cadencia de golpes
+const AI_JUMP_INTERVAL := 0.8
+const AI_SPECIAL_INTERVAL := 1.2          # cada cuánto reconsidera un especial
+# Sensor de borde: sonda hacia abajo por delante del pie de avance.
+const AI_LEDGE_PROBE_X := 22.0            # half-width(16) + margen, delante
+const AI_FOOT_Y := 24.0                   # pie ≈ y local +24 del cuerpo
+const AI_GAP_JUMP_MAX := 130.0            # gap "saltable" hacia el rival
+const AI_PROJECTILE_RANGE := 250.0        # rango medio para lanzar proyectil
+
 func _ready() -> void:
 	# Las acciones de este slot deben existir en el Input Map.
 	for a in ["jump", "left", "right", "attack", "dash", "shield", "proyectile"]:
@@ -106,22 +127,29 @@ func set_as_cpu() -> void:
 func _action(base: String) -> String:
 	return base + "_p" + str(player_id)
 
-# Devuelve si se acaba de pulsar la acción de este slot. La IA nunca "pulsa".
+# Devuelve si se acaba de pulsar la acción de este slot. En modo IA leemos las
+# pulsaciones que fabrica _ai_think() (válidas solo durante este frame físico).
 func _pressed(base: String) -> bool:
 	if control_mode == ControlMode.AI:
-		return false
+		return _ai_pressed.get(base, false)
 	return Input.is_action_just_pressed(_action(base))
 
-# Eje horizontal de este slot (-1..1). La IA no aporta input de movimiento.
+# Eje horizontal de este slot (-1..1). En modo IA devolvemos la intención de
+# movimiento calculada por _ai_think().
 func _axis() -> float:
 	if control_mode == ControlMode.AI:
-		return 0.0
+		return _ai_axis
 	return Input.get_axis(_action("left"), _action("right"))
 
 func _physics_process(delta: float) -> void:
 	if not character_data:
 		return
-	
+
+	# 0. CEREBRO DE LA IA: decide movimiento y pulsaciones de este frame antes de
+	# que el resto del proceso lea _axis()/_pressed().
+	if control_mode == ControlMode.AI:
+		_ai_think(delta)
+
 	# 1. DETECTAR ATAQUE ESPECIAL (DASH)
 	# Comprobamos que no estemos atacando ni haciendo otro dash
 	if _attack_finished and _dash_finished and _knockback_finished and is_on_floor():
@@ -216,6 +244,101 @@ func _physics_process(delta: float) -> void:
 
 	# 7. INDICADOR DE COOLDOWN DEL ESCUDO
 	_update_shield_cooldown(delta)
+
+# --- IA (modo CPU) ---
+# Localiza al rival reutilizando el grupo "player" (igual que hace arena.gd).
+func _find_opponent() -> Node:
+	for p in get_tree().get_nodes_in_group("player"):
+		if p != self:
+			return p
+	return null
+
+# ¿Hay suelo sólido un poco por delante en la dirección dir (+1/-1)?
+# Sonda hacia abajo desde el pie de avance contra la capa "Collision" (1).
+# Evita que la IA camine hacia un hueco y caiga a la zona de muerte.
+func _has_ground_ahead(dir: float) -> bool:
+	if dir == 0.0:
+		return true
+	var foot := global_position + Vector2(dir * AI_LEDGE_PROBE_X, AI_FOOT_Y - 4.0)
+	var to := foot + Vector2(0, 24.0)
+	var q := PhysicsRayQueryParameters2D.create(foot, to, 1)  # máscara 1 = "Collision"
+	q.exclude = [self]
+	return not get_world_2d().direct_space_state.intersect_ray(q).is_empty()
+
+# Cerebro básico de la CPU. No lee el teclado: fabrica _ai_axis y _ai_pressed,
+# que _axis()/_pressed() devuelven en modo IA, de modo que toda la máquina de
+# estados (mover, saltar, atacar, habilidades, giro) funciona sin cambios.
+func _ai_think(delta: float) -> void:
+	# Intenciones nuevas cada frame: una pulsación dura un solo frame físico,
+	# igual que la semántica "just pressed" que espera el resto del proceso.
+	_ai_axis = 0.0
+	_ai_pressed.clear()
+
+	var target := _find_opponent()
+	if target == null:
+		return
+
+	# Enfriamientos (no bajan de 0).
+	_ai_attack_cooldown = maxf(_ai_attack_cooldown - delta, 0.0)
+	_ai_jump_cooldown = maxf(_ai_jump_cooldown - delta, 0.0)
+	_ai_special_cooldown = maxf(_ai_special_cooldown - delta, 0.0)
+
+	var dx: float = target.global_position.x - global_position.x
+	var dy: float = target.global_position.y - global_position.y
+	var adx := absf(dx)
+	var dir := signf(dx)
+
+	# Mirar hacia el rival (mismas condiciones que el giro de la sección 5), para
+	# que dash/proyectil salgan en la dirección correcta aunque estemos quietos.
+	# Reflejamos también las cajas, como hace la sección 5 al girar.
+	if _dash_finished and _knockback_finished and dir != 0.0:
+		_body.scale.x = dir
+		_weapon.scale.x = dir
+		$Hurtbox/CollisionShape2D.position.x = _hurtbox_base_x * dir
+		$CollisionShape2D.position.x = _body_col_base_x * dir
+		_place_hitbox()
+
+	# ACERCARSE (con conciencia de bordes).
+	if adx > AI_ATTACK_RANGE:
+		if is_on_floor() and not _has_ground_ahead(dir):
+			# Hueco por delante: no nos tiramos. Si el rival está al otro lado y a
+			# tiro de salto, saltamos hacia él; si no, nos paramos en el borde.
+			if dy < AI_VERTICAL_TOLERANCE and adx <= AI_GAP_JUMP_MAX and _ai_jump_cooldown <= 0.0:
+				_ai_pressed["jump"] = true
+				_ai_jump_cooldown = AI_JUMP_INTERVAL
+				_ai_axis = dir
+			# else: _ai_axis se queda en 0 (parados en el borde).
+		else:
+			_ai_axis = dir
+
+		# Saltar si el rival está claramente por encima.
+		if dy < -AI_JUMP_TRIGGER and is_on_floor() and _ai_jump_cooldown <= 0.0:
+			_ai_pressed["jump"] = true
+			_ai_jump_cooldown = AI_JUMP_INTERVAL
+
+	# ATACAR en rango y al mismo nivel.
+	if adx <= AI_ATTACK_RANGE and absf(dy) < AI_VERTICAL_TOLERANCE and _ai_attack_cooldown <= 0.0:
+		_ai_pressed["attack"] = true
+		_ai_attack_cooldown = AI_ATTACK_INTERVAL
+
+	# ESPECIALES (variedad). Solo tienen efecto si el personaje posee la habilidad
+	# correspondiente; pulsar una base sin habilidad es inofensivo.
+	if _ai_special_cooldown <= 0.0:
+		var used_special := false
+		if adx < AI_ATTACK_RANGE and not target._attack_finished and randf() < 0.6:
+			# Rival pegado y atacando: nos protegemos.
+			_ai_pressed["shield"] = true
+			used_special = true
+		elif adx > AI_ATTACK_RANGE and adx < AI_PROJECTILE_RANGE and randf() < 0.7:
+			# Rango medio: disparamos un proyectil.
+			_ai_pressed["proyectile"] = true
+			used_special = true
+		elif adx >= AI_PROJECTILE_RANGE and _has_ground_ahead(dir) and randf() < 0.5:
+			# Lejos y con suelo por delante: dash para acortar distancia sin caer.
+			_ai_pressed["dash"] = true
+			used_special = true
+		if used_special:
+			_ai_special_cooldown = AI_SPECIAL_INTERVAL
 
 # Reaparece en el punto indicado (lo llama el gestor de la arena cuando el
 # luchador sale de los límites por un agujero o lo empujan fuera del escenario).
