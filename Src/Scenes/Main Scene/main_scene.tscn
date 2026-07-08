@@ -10,5 +10,7 @@ scene_container = NodePath("SceneContainer")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277988731]
 position_smoothing_enabled = true
 script = ExtResource("4_cam")
+min_zoom = 0.5
+max_zoom = 0.7
 
 [node name="SceneContainer" type="Node" parent="." unique_id=1324025487]

@@ -1,8 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3]
-
-; Tema compartido de los menus. Botones reskineados con el pack Kenney
-; UI Pack - Pixel Adventure (CC0), tiles "Large tiles / Thick outline" (32x32).
-; Fuente por defecto: PressStart2P (reutilizada; el pack no incluye fuentes).
+[gd_resource type="Theme" format=3 uid="uid://bddumu0og7lmw"]
 
 [ext_resource type="Texture2D" uid="uid://cnmwre7ubahst" path="res://UI/Assets/kenney/tile_0001.png" id="1_normal"]
 [ext_resource type="Texture2D" uid="uid://cola0r4nrbqci" path="res://UI/Assets/kenney/tile_0000.png" id="2_hover"]
@@ -11,6 +7,13 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
 texture = ExtResource("1_normal")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_focus"]
+texture = ExtResource("3_focus")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
@@ -30,13 +33,6 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_focus"]
-texture = ExtResource("3_focus")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-
 [resource]
 default_font = ExtResource("4_font")
 default_font_size = 8
@@ -44,8 +40,8 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_color = Color(0.2, 0.15, 0.1, 1)
 Button/colors/font_pressed_color = Color(0.2, 0.15, 0.1, 1)
-Button/styles/normal = SubResource("StyleBoxTexture_normal")
-Button/styles/hover = SubResource("StyleBoxTexture_hover")
-Button/styles/pressed = SubResource("StyleBoxTexture_pressed")
-Button/styles/focus = SubResource("StyleBoxTexture_focus")
 Button/styles/disabled = SubResource("StyleBoxTexture_normal")
+Button/styles/focus = SubResource("StyleBoxTexture_focus")
+Button/styles/hover = SubResource("StyleBoxTexture_hover")
+Button/styles/normal = SubResource("StyleBoxTexture_normal")
+Button/styles/pressed = SubResource("StyleBoxTexture_pressed")
