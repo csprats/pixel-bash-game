@@ -139,7 +139,8 @@ func _pressed(base: String) -> bool:
 func _axis() -> float:
 	if control_mode == ControlMode.AI:
 		return _ai_axis
-	return Input.get_axis(_action("left"), _action("right"))
+	# Usamos signf() para que solo devuelve 1, -1 o 0
+	return signf(Input.get_axis(_action("left"), _action("right")))
 
 func _physics_process(delta: float) -> void:
 	if not character_data:

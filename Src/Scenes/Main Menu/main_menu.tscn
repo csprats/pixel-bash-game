@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctpenyfdyy4n4"]
+[gd_scene format=3 uid="uid://ctpenyfdyy4n4"]
 
 [ext_resource type="Script" uid="uid://bpgu08ymmfly1" path="res://Scenes/Main Menu/menu_controller.gd" id="1_e2pmq"]
-[ext_resource type="Theme" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="2_theme"]
 
 [node name="Main Menu" type="Control" unique_id=208704291 node_paths=PackedStringArray("button_play")]
 layout_mode = 3
@@ -10,7 +10,7 @@ theme = ExtResource("2_theme")
 script = ExtResource("1_e2pmq")
 button_play = NodePath("CenterContainer/VBoxContainer/ButtonStart")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1517121520]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
