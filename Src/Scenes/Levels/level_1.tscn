@@ -2,8 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://dml0ujfru4vhx" path="res://Tilesets/Tileset.png" id="1_exqq0"]
 [ext_resource type="PackedScene" uid="uid://tl2em8dc6lux" path="res://Character/character.tscn" id="2_512ox"]
+[ext_resource type="Texture2D" uid="uid://b1ah7i1vvabri" path="res://Scenes/Levels/Assets/Clouds 1/1.png" id="2_rb0md"]
 [ext_resource type="Resource" uid="uid://e6ae0ynmwpu5" path="res://Character/Punk/punk.tres" id="3_fn8h4"]
+[ext_resource type="Texture2D" uid="uid://cy5dmf2kne5qf" path="res://Scenes/Levels/Assets/Clouds 1/2.png" id="3_u5ghp"]
 [ext_resource type="Resource" uid="uid://deopv2hmm2h2i" path="res://Character/Cyborg/cyborg.tres" id="4_fn8h4"]
+[ext_resource type="Texture2D" uid="uid://25hbxldfef86" path="res://Scenes/Levels/Assets/Clouds 1/4.png" id="5_afv7b"]
 [ext_resource type="Script" uid="uid://qf2w8l5qoavg" path="res://Scenes/Levels/arena.gd" id="5_arena"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0p6u"]
@@ -754,6 +757,26 @@ sources/0 = SubResource("TileSetAtlasSource_v0p6u")
 
 [node name="Level 1" type="Node2D" unique_id=545980972]
 script = ExtResource("5_arena")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1283538345]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1887432313]
+position = Vector2(-576, -89.515)
+motion_mirroring = Vector2(576, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1009915366]
+position = Vector2(0, -300.48502)
+scale = Vector2(1, 1.9274228)
+texture = ExtResource("2_rb0md")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=996144185]
+texture = ExtResource("3_u5ghp")
+centered = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=691289125]
+texture = ExtResource("5_afv7b")
+centered = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1213066441]
 tile_map_data = PackedByteArray("AADz/wAAAAAAAAAAAADz/wEAAAAAAAEAAADz/wIAAAAAAAIAAADz/wMAAAAAAAkAAAD0/wAAAAABAAAAAAD0/wEAAAABAAEAAAD0/wIAAAABAAIAAAD0/wMAAAABAAkAAAD1/wAAAAACAAAAAAD1/wEAAAACAAEAAAD1/wIAAAACAAIAAAD1/wMAAAACAAkAAAD2/wAAAAADAAAAAAD2/wEAAAADAAEAAAD2/wIAAAADAAIAAAD2/wMAAAADAAkAAAD3/wAAAAAEAAAAAAD3/wEAAAAEAAEAAAD3/wIAAAAEAAIAAAD3/wMAAAAEAAkAAAD4/wAAAAABAAAAAAD4/wEAAAABAAEAAAD4/wIAAAAFAAIAAAD4/wMAAAABAAkAAAD5/wAAAAACAAAAAAD5/wEAAAACAAEAAAD5/wIAAAAGAAIAAAD5/wMAAAACAAkAAAD6/wAAAAADAAAAAAD6/wEAAAADAAEAAAD6/wIAAAABAAIAAAD6/wMAAAADAAkAAAD7/wAAAAAEAAAAAAD7/wEAAAAEAAEAAAD7/wIAAAACAAIAAAD7/wMAAAAEAAkAAAD8/wAAAAABAAAAAAD8/wEAAAABAAEAAAD8/wIAAAADAAIAAAD8/wMAAAABAAkAAAD9/wAAAAAFAAAAAAD9/wEAAAAFAAEAAAD9/wIAAAAHAAIAAAACAAAAAAAKAAAAAAACAAEAAAAAAAEAAAACAAIAAAAAAAIAAAACAAMAAAAAAAkAAAADAAAAAAAEAAAAAAADAAEAAAAEAAEAAAADAAIAAAAEAAIAAAADAAMAAAAEAAkAAAAEAAAAAAABAAAAAAAEAAEAAAABAAEAAAAEAAIAAAAFAAIAAAAEAAMAAAABAAkAAAAFAAAAAAACAAAAAAAFAAEAAAACAAEAAAAFAAIAAAAGAAIAAAAFAAMAAAACAAkAAAAGAAAAAAADAAAAAAAGAAEAAAADAAEAAAAGAAIAAAABAAIAAAAGAAMAAAADAAkAAAAHAAAAAAAEAAAAAAAHAAEAAAAEAAEAAAAHAAIAAAACAAIAAAAHAAMAAAAEAAkAAAAIAAAAAAABAAAAAAAIAAEAAAABAAEAAAAIAAIAAAADAAIAAAAIAAMAAAABAAkAAAAJAAAAAAACAAAAAAAJAAEAAAACAAEAAAAJAAIAAAAEAAIAAAAJAAMAAAACAAkAAAAKAAAAAAADAAAAAAAKAAEAAAADAAEAAAAKAAIAAAAFAAIAAAAKAAMAAAADAAkAAAALAAAAAAAEAAAAAAALAAEAAAAEAAEAAAALAAIAAAAGAAIAAAALAAMAAAAEAAkAAAAMAAAAAAABAAAAAAAMAAEAAAABAAEAAAAMAAIAAAABAAIAAAAMAAMAAAABAAkAAAANAAEAAAAFAAEAAAANAAIAAAAHAAIAAAANAAMAAAAFAAkAAAANAAAAAAAFAAAAAAD9/wMAAAAFAAkAAAA=")
