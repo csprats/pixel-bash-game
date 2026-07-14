@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 signal damage_changed(new_damage: int, current_lives: int)
-## Progreso de recarga del escudo (0 = recien gastado, 100 = listo de nuevo).
-signal shield_cooldown_changed(progress: float)
+## Maná actual y máximo del luchador (recurso común de escudo y proyectil).
+signal mana_changed(current: float, maximum: float)
 
 @export var character_data: CharacterData
 
@@ -26,11 +26,9 @@ var _knockback_finished: bool = true
 var _is_invincible: bool = false
 # Doble salto: disponible una vez por vuelo; se recupera al pisar el suelo.
 var _double_jump_available: bool = true
-var _shield_on_cooldown: bool = false
-# Seguimiento del cooldown del escudo para alimentar el indicador de la UI.
-# shield.gd conmuta _shield_on_cooldown; aqui medimos el tiempo transcurrido.
-var _was_on_cooldown: bool = false
-var _shield_cooldown_elapsed: float = 0.0
+# Maná actual del luchador (recurso común de escudo y proyectil). Empieza lleno
+# en _ready y se gasta/regenera vía spend_mana()/gain_mana().
+var _current_mana: float = 0.0
 
 var _current_damage: int = 0
 var lives: int = 3
@@ -76,6 +74,10 @@ func _ready() -> void:
 		character_data = chosen
 
 	if character_data:
+		# El maná arranca lleno al comenzar la partida.
+		_current_mana = character_data.max_mana
+		mana_changed.emit(_current_mana, character_data.max_mana)
+
 		if character_data.body_animations:
 			_body.sprite_frames = character_data.body_animations
 		if character_data.weapon_animations:
@@ -243,9 +245,6 @@ func _physics_process(delta: float) -> void:
 	# 6. APLICAR MOVIMIENTO
 	move_and_slide()
 
-	# 7. INDICADOR DE COOLDOWN DEL ESCUDO
-	_update_shield_cooldown(delta)
-
 # --- IA (modo CPU) ---
 # Localiza al rival reutilizando el grupo "player" (igual que hace arena.gd).
 func _find_opponent() -> Node:
@@ -358,30 +357,21 @@ func respawn(pos: Vector2) -> void:
 	_current_damage = 0
 	damage_changed.emit(_current_damage, lives)
 
-# Alimenta el indicador de escudo de la UI. Fases (shield.gd conmuta los flags):
-#   escudo activo (_is_invincible)   -> barra vacia (0)
-#   recarga (_shield_on_cooldown)    -> se rellena de 0 a 100 con el tiempo
-#   listo de nuevo                   -> barra llena (100)
-func _update_shield_cooldown(delta: float) -> void:
-	if _is_invincible:
-		# Escudo activo: la barra se vacia en cuanto se levanta y sigue vacia.
-		_was_on_cooldown = false
-		shield_cooldown_changed.emit(0.0)
-	elif _shield_on_cooldown:
-		if not _was_on_cooldown:
-			# Flanco de subida: la recarga acaba de empezar.
-			_was_on_cooldown = true
-			_shield_cooldown_elapsed = 0.0
-		_shield_cooldown_elapsed += delta
-		var total := character_data.shield_cooldown
-		var progress := 100.0
-		if total > 0.0:
-			progress = clampf(_shield_cooldown_elapsed / total * 100.0, 0.0, 100.0)
-		shield_cooldown_changed.emit(progress)
-	elif _was_on_cooldown:
-		# Flanco de bajada: el escudo vuelve a estar listo.
-		_was_on_cooldown = false
-		shield_cooldown_changed.emit(100.0)
+# --- MANÁ (recurso común de escudo y proyectil) ---
+# ¿Hay maná suficiente para pagar 'cost'? Lo consultan las habilidades antes de
+# activarse (ver shield.gd y proyectile.gd).
+func has_mana(cost: float) -> bool:
+	return _current_mana >= cost
+
+# Gasta maná (no baja de 0) y refresca la barra de la UI.
+func spend_mana(cost: float) -> void:
+	_current_mana = maxf(_current_mana - cost, 0.0)
+	mana_changed.emit(_current_mana, character_data.max_mana)
+
+# Regenera maná (no supera max_mana) y refresca la barra de la UI.
+func gain_mana(amount: float) -> void:
+	_current_mana = minf(_current_mana + amount, character_data.max_mana)
+	mana_changed.emit(_current_mana, character_data.max_mana)
 
 func _on_body_animation_finished() -> void:
 	if _body.animation == "Attack" or _body.animation == "Run_Attack":
@@ -425,6 +415,10 @@ func _place_hitbox() -> void:
 func receive_damage(amount: int, knockback_dir: float = 0.0) -> void:
 	_current_damage += amount
 
+	# Recibir un golpe regenera maná (más que al atacar). Nota: esto tambien se
+	# aplica al daño de depuracion con la tecla P (solo P1), aceptable por ser debug.
+	gain_mana(character_data.mana_gain_on_damage)
+
 	damage_changed.emit(_current_damage, lives)
 	_play_hit_flash()
 	_apply_hitstop()
@@ -467,6 +461,12 @@ func _play_ready_flash() -> void:
 	await get_tree().create_timer(0.25, true, false, true).timeout
 	modulate = Color(1, 1, 1, 1)
 
+func _play_no_mana_flash() -> void:
+	# Destello gris-azulado breve: se intentó usar una habilidad sin maná suficiente.
+	modulate = Color(0.4, 0.4, 0.55, 1)
+	await get_tree().create_timer(0.15, true, false, true).timeout
+	modulate = Color(1, 1, 1, 1)
+
 func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	if area.owner == self:
 		return # Ignoramos nuestro propio cuerpo
@@ -476,3 +476,5 @@ func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index
 		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
 			# Empujamos a la víctima hacia donde mira el atacante (self).
 			area.get_parent().receive_damage(5, _body.scale.x)
+			# Golpear al rival regenera algo de maná (menos que al recibir daño).
+			gain_mana(character_data.mana_gain_on_hit)

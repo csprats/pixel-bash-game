@@ -10,7 +10,13 @@ func activate(player: CharacterBody2D) -> void:
 	if not projectile_scene:
 		print("Error: No has asignado la escena del proyectil en el Resource de la habilidad")
 		return
-	
+
+	# Lanzar el proyectil cuesta maná: si no hay suficiente, no se lanza (feedback visual).
+	if not player.has_mana(player.character_data.projectile_mana_cost):
+		player._play_no_mana_flash()
+		return
+	player.spend_mana(player.character_data.projectile_mana_cost)
+
 	# 2. Fabricamos (instanciamos) el proyectil
 	var new_projectile = projectile_scene.instantiate()
 	

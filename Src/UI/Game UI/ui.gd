@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var damage_label: Array[Label]
 @export var player_icon: Array[TextureRect]
-@export var shield_cooldown_bar: Array[TextureProgressBar]
+@export var mana_bar: Array[TextureProgressBar]
 
 func _ready() -> void:
 	# Esperamos un microsegundo para asegurarnos de que todo se ha cargado en el mapa
@@ -26,18 +26,19 @@ func _ready() -> void:
 
 			icon.texture = player.character_data.character_icon
 
-			# Barra de cooldown del escudo (una por jugador, emparejada por índice)
-			if i < shield_cooldown_bar.size():
-				var bar = shield_cooldown_bar[i]
-				player.shield_cooldown_changed.connect(_on_player_shield_cooldown_changed.bind(bar))
+			# Barra de maná (una por jugador, emparejada por índice)
+			if i < mana_bar.size():
+				var bar = mana_bar[i]
+				player.mana_changed.connect(_on_player_mana_changed.bind(bar))
 
 #func _on_player_damage_changed(new_damage: int) -> void:
 	#damage_label.text = str(new_damage) + "%"
 	
 func _on_player_damage_changed(new_damage: int, current_lives: int, label: Label) -> void:
 	if label:
-		label.text = str(new_damage) + "% | " + str(current_lives) + " ♥"
+		label.text = str(new_damage) + "% " + str(current_lives) + " ♥"
 
-func _on_player_shield_cooldown_changed(progress: float, bar: TextureProgressBar) -> void:
+func _on_player_mana_changed(current: float, maximum: float, bar: TextureProgressBar) -> void:
 	if bar:
-		bar.value = progress
+		bar.max_value = maximum
+		bar.value = current

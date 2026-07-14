@@ -40,8 +40,17 @@ class_name CharacterData
 
 @export_group("Habilidades")
 @export var shield_duration: float = 1
-@export var shield_cooldown: float = 2
 @export var special_abilities: Array[GDScript] = []
+
+# --- MANÁ ---
+# Recurso común que gastan el escudo y el proyectil. La barra arranca llena
+# (max_mana) y se regenera al golpear al rival (poco) o al recibir daño (más).
+@export_group("Maná")
+@export var max_mana: float = 100.0
+@export var shield_mana_cost: float = 40.0
+@export var projectile_mana_cost: float = 25.0
+@export var mana_gain_on_hit: float = 8.0      # al golpear al rival
+@export var mana_gain_on_damage: float = 20.0  # al recibir un golpe
 
 # --- EMPUJE AL RECIBIR DAÑO (KNOCKBACK) ---
 # Al estilo Smash: cuanto más daño acumulado tiene el luchador, más lejos sale
