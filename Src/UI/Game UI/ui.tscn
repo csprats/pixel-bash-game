@@ -9,16 +9,16 @@ colors = PackedColorArray(0.08, 0.08, 0.1, 1, 0.08, 0.08, 0.1, 1)
 
 [sub_resource type="GradientTexture2D" id="Tex_under"]
 gradient = SubResource("Gradient_under")
-width = 16
-height = 4
+width = 64
+height = 6
 
 [sub_resource type="Gradient" id="Gradient_progress"]
 colors = PackedColorArray(0.72, 0.35, 1, 1, 0.55, 0.2, 0.95, 1)
 
 [sub_resource type="GradientTexture2D" id="Tex_progress"]
 gradient = SubResource("Gradient_progress")
-width = 16
-height = 4
+width = 64
+height = 6
 
 [node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("damage_label", "player_icon", "mana_bar")]
 script = ExtResource("1_dajm1")
@@ -119,6 +119,7 @@ stretch_mode = 5
 [node name="player_mana2" type="TextureProgressBar" parent="player2_hud"]
 custom_minimum_size = Vector2(64, 6)
 layout_mode = 2
+size_flags_horizontal = 8
 value = 100.0
 fill_mode = 1
 texture_under = SubResource("Tex_under")
