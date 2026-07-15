@@ -11,6 +11,11 @@ const LEVEL_SELECT_SCENE = "res://Scenes/Level Select/level_select.tscn"
 const LEVEL_1_SCENE = "res://Scenes/Levels/level_1.tscn"
 const LEVEL_2_SCENE = "res://Scenes/Levels/level_2.tscn"
 const UI_SCENE = "res://UI/Game UI/ui.tscn"
+const WIN_INDICATOR = "res://Scenes/Win indicator/win_indicator.tscn"
+
+# Aquí se almacena el ganador de la última partida
+var winner: int = 0 # Ponemos algo para que el juego no crashee
+var winner_data_path: String
 
 # Modo de juego elegido en el menú: jugador vs jugador o jugador vs CPU.
 enum GameMode { PVP, PVC }

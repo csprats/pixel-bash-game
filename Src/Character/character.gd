@@ -343,19 +343,28 @@ func _ai_think(delta: float) -> void:
 # Reaparece en el punto indicado (lo llama el gestor de la arena cuando el
 # luchador sale de los límites por un agujero o lo empujan fuera del escenario).
 func respawn(pos: Vector2) -> void:
+	lives -= 1
+	damage_changed.emit(_current_damage, lives)
 	if (lives <= 0): 
-		# Aquí podemos llamar a una función de la UI que 
-		# muestre un mensaje de que el otro jugador a ganado
+		var players := get_tree().get_nodes_in_group("player")
+		
+		for p in players:
+			if p != self and p.lives > 0:
+				GameManager.winner = p.player_id
+				# 🌟 NUEVO: Guardamos la ruta física del archivo .tres del ganador
+				if p.character_data:
+					GameManager.winner_data_path = p.character_data.resource_path
+				break
+		
+		GameManager.change_scene(GameManager.WIN_INDICATOR)
 		queue_free()
 		return
-	lives -= 1
 	global_position = pos
 	velocity = Vector2.ZERO
 	_knockback_finished = true  # cancela cualquier empuje en curso
 	_double_jump_available = true
 	# Al morir, el porcentaje de daño acumulado se reinicia (estilo stock).
 	_current_damage = 0
-	damage_changed.emit(_current_damage, lives)
 
 # --- MANÁ (recurso común de escudo y proyectil) ---
 # ¿Hay maná suficiente para pagar 'cost'? Lo consultan las habilidades antes de

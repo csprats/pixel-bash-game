@@ -6,6 +6,7 @@
 [ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_nd1ef"]
 [ext_resource type="Script" uid="uid://bedvy02wa0skg" path="res://Abilities/dash.gd" id="4_dhs75"]
 [ext_resource type="Script" uid="uid://dfevifalhtlam" path="res://Abilities/shield.gd" id="5_vjxnr"]
+[ext_resource type="Script" uid="uid://5rltuhv36tk7" path="res://Abilities/proyectile.gd" id="6_ire1p"]
 
 [resource]
 script = ExtResource("2_uxets")
@@ -19,5 +20,5 @@ body_animations = ExtResource("1_nd1ef")
 weapon_animations = ExtResource("3_nd1ef")
 attack_hitbox_offset = Vector2(10, 4)
 attack_hitbox_size = Vector2(8, 3)
-special_abilities = Array[GDScript]([ExtResource("4_dhs75"), ExtResource("5_vjxnr")])
+special_abilities = Array[GDScript]([ExtResource("4_dhs75"), ExtResource("5_vjxnr"), ExtResource("6_ire1p")])
 metadata/_custom_type_script = "uid://4au8kg10088b"

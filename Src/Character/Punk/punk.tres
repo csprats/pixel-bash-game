@@ -2,6 +2,7 @@
 
 [ext_resource type="SpriteFrames" uid="uid://3beh6dctsv6g" path="res://Character/Punk/punk_body_frames.tres" id="1_gwm3j"]
 [ext_resource type="Script" uid="uid://4au8kg10088b" path="res://Templates/player.gd" id="1_ypw1e"]
+[ext_resource type="Texture2D" uid="uid://bgcxm7p83cq4u" path="res://Character/Punk/Icon.png" id="2_kphrs"]
 [ext_resource type="SpriteFrames" uid="uid://bh7vwn5a088am" path="res://Weapons/2/weapon_2_frames.tres" id="3_8vnf7"]
 [ext_resource type="Script" uid="uid://bedvy02wa0skg" path="res://Abilities/dash.gd" id="3_xmgdv"]
 [ext_resource type="Script" uid="uid://5rltuhv36tk7" path="res://Abilities/proyectile.gd" id="4_kphrs"]
@@ -10,6 +11,7 @@
 [resource]
 script = ExtResource("1_ypw1e")
 character_name = "Punk"
+character_icon = ExtResource("2_kphrs")
 jump_force = -350.0
 double_jump_force = -320.0
 body_animations = ExtResource("1_gwm3j")
