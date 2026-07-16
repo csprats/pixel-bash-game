@@ -7,4 +7,4 @@ func _ready() -> void:
 	GameManager.register_container(scene_container)
 	
 	# Cargamos la primera pantalla del juego (por ejemplo, el menú principal)
-	GameManager.change_scene(GameManager.MENU_SCENE)
+	GameManager.change_scene(GameManager.TITLE_SCREEN)

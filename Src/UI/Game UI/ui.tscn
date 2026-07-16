@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="1_2fwl4"]
 [ext_resource type="Script" uid="uid://ddfjtjdt0fl3t" path="res://UI/Game UI/ui.gd" id="1_dajm1"]
-[ext_resource type="Texture2D" uid="uid://dxbr7blr7vbyc" path="res://UI/Assets/kenney/portrait_frame.png" id="2_frame"]
+[ext_resource type="Texture2D" uid="uid://cg2lih8xtv0qs" path="res://UI/Assets/kenney_modern/panel-border-011.png" id="2_2tie0"]
 
 [sub_resource type="Gradient" id="Gradient_under"]
 colors = PackedColorArray(0.08, 0.08, 0.1, 1, 0.08, 0.08, 0.1, 1)
@@ -46,7 +46,7 @@ theme_override_constants/separation = 3
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("2_frame")
+texture = ExtResource("2_2tie0")
 expand_mode = 1
 stretch_mode = 5
 
@@ -104,7 +104,7 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("2_frame")
+texture = ExtResource("2_2tie0")
 expand_mode = 1
 stretch_mode = 5
 

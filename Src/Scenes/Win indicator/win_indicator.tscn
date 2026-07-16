@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://c05dra47iilya"]
 
-[ext_resource type="Texture2D" uid="uid://dxbr7blr7vbyc" path="res://UI/Assets/kenney/portrait_frame.png" id="1_knn1k"]
 [ext_resource type="Script" uid="uid://bf2orpvs4xpik" path="res://Scenes/Win indicator/win_indicator.gd" id="1_pagg3"]
+[ext_resource type="Texture2D" uid="uid://o4inrwllq4ag" path="res://UI/Assets/kenney_modern/panel-transparent-center-011.png" id="2_r6hlk"]
 [ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="2_ss5w1"]
-[ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="4_ps3m8"]
+[ext_resource type="Theme" uid="uid://coey2lkutfrw3" path="res://UI/menu_theme_modern.tres" id="4_uprp6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_knn1k"]
-texture = ExtResource("1_knn1k")
-texture_margin_left = 7.0
-texture_margin_top = 7.0
-texture_margin_right = 7.0
-texture_margin_bottom = 7.0
-region_rect = Rect2(-0.13664246, -0.04458499, 16.323769, 16.232277)
+texture = ExtResource("2_r6hlk")
+texture_margin_left = 13.053848
+texture_margin_top = 12.729534
+texture_margin_right = 12.513327
+texture_margin_bottom = 10.89176
+region_rect = Rect2(-0.13664246, -0.04458499, 48.025955, 46.880863)
 
 [node name="WinIndicator" type="Control" unique_id=1983577115 node_paths=PackedStringArray("winner_icon", "winner_text", "button")]
 layout_mode = 3
@@ -69,11 +69,11 @@ offset_bottom = 121.0
 
 [node name="Button" type="Button" parent="." unique_id=1776325267]
 layout_mode = 0
-offset_left = 118.0
-offset_top = 135.0
-offset_right = 206.0
-offset_bottom = 159.0
-theme = ExtResource("4_ps3m8")
+offset_left = 115.0
+offset_top = 123.0
+offset_right = 213.6704
+offset_bottom = 158.09172
+theme = ExtResource("4_uprp6")
 text = "Main menu"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

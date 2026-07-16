@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://v35a8pqxuid1"]
+
+[ext_resource type="Texture2D" uid="uid://cb0d10e2ob7op" path="res://Scenes/Title Screen/Background/1.png" id="1_xwhdp"]
+[ext_resource type="Texture2D" uid="uid://drhn4xmv261xf" path="res://Scenes/Title Screen/Background/2.png" id="2_7wtlt"]
+[ext_resource type="Texture2D" uid="uid://bium4cnipwg7s" path="res://Scenes/Title Screen/Background/3.png" id="3_h8usk"]
+[ext_resource type="Texture2D" uid="uid://bxgev37uke3pb" path="res://Scenes/Title Screen/Background/4.png" id="4_6xaii"]
+[ext_resource type="Texture2D" uid="uid://cmvmeva2h75ok" path="res://Scenes/Title Screen/Background/5.png" id="5_xgnhb"]
+[ext_resource type="Texture2D" uid="uid://diqtq6qoe3i36" path="res://Scenes/Title Screen/Background/6.png" id="6_4osv7"]
+
+[node name="Background" type="Node2D" unique_id=1991753837]
+position = Vector2(94, -36)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1842540997]
+texture = ExtResource("1_xwhdp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=483869992]
+texture = ExtResource("2_7wtlt")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=2127446255]
+texture = ExtResource("3_h8usk")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=862319109]
+texture = ExtResource("4_6xaii")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=232379625]
+texture = ExtResource("5_xgnhb")
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=576791185]
+texture = ExtResource("6_4osv7")

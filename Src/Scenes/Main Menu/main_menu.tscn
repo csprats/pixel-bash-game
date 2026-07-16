@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bpgu08ymmfly1" path="res://Scenes/Main Menu/menu_controller.gd" id="1_e2pmq"]
 [ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://coey2lkutfrw3" path="res://UI/menu_theme_modern.tres" id="3_7xkbd"]
+[ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="3_y0aff"]
 
 [node name="Main Menu" type="Control" unique_id=208704291 node_paths=PackedStringArray("button_play")]
 layout_mode = 3
@@ -9,6 +11,8 @@ anchors_preset = 0
 theme = ExtResource("2_theme")
 script = ExtResource("1_e2pmq")
 button_play = NodePath("CenterContainer/VBoxContainer/ButtonStart")
+
+[node name="Background" parent="." unique_id=1991753837 instance=ExtResource("3_y0aff")]
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1517121520]
 layout_mode = 1
@@ -21,18 +25,16 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=765920869]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=130126692]
-layout_mode = 2
-text = "Fighter Game"
-
 [node name="ButtonStart" type="Button" parent="CenterContainer/VBoxContainer" unique_id=41219930]
 layout_mode = 2
+theme = ExtResource("3_7xkbd")
 text = "start"
 
 [node name="ButtonQuit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=418504459]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonStart")
 focus_neighbor_bottom = NodePath("../ButtonStart")
+theme = ExtResource("3_7xkbd")
 text = "quit"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonStart" to="." method="_on_button_start_pressed"]

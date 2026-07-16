@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://mphxtv8rjsn6"]
+
+[ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="1_2i4no"]
+[ext_resource type="FontFile" uid="uid://uv8wc8ammdaq" path="res://Scenes/Title Screen/pixelated-times-new-roman.otf" id="1_2mq87"]
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="2_5dsjl"]
+[ext_resource type="FontFile" uid="uid://bc6ystme5t0fx" path="res://Scenes/Title Screen/m6x11.ttf" id="2_qvf3b"]
+[ext_resource type="Script" uid="uid://djjhdpf78x1op" path="res://Scenes/Title Screen/label.gd" id="3_wwswu"]
+
+[node name="TitleScreen" type="Node2D" unique_id=233609390]
+
+[node name="Background" parent="." unique_id=1991753837 instance=ExtResource("1_2i4no")]
+
+[node name="Title" type="Label" parent="." unique_id=1445994079]
+offset_left = -55.0
+offset_top = -82.0
+offset_right = 20.0
+offset_bottom = -59.0
+theme_override_fonts/font = ExtResource("1_2mq87")
+theme_override_font_sizes/font_size = 32
+text = "Pixel Bash"
+
+[node name="Label" type="Label" parent="Title" unique_id=504653746]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("2_qvf3b")
+theme_override_font_sizes/font_size = 16
+text = "the fighting game"
+
+[node name="Line2D" type="Line2D" parent="Title" unique_id=195638687]
+points = PackedVector2Array(0, 19, 120, 19)
+width = 1.0
+
+[node name="Label" type="Label" parent="." unique_id=410984228]
+offset_left = -62.0
+offset_top = 14.0
+offset_right = 66.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_5dsjl")
+theme_override_font_sizes/font_size = 8
+text = "Press A to start"
+script = ExtResource("3_wwswu")
+
+[node name="Timer" type="Timer" parent="Label" unique_id=1635047475]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Label/Timer" to="Label" method="_on_timer_timeout"]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://b1uf8laljpk0c"]
 
-[ext_resource type="Script" path="res://Scenes/Character Select/character_select.gd" id="1_char"]
-[ext_resource type="Theme" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://dd35v4wrj7iy" path="res://Scenes/Character Select/character_select.gd" id="1_char"]
+[ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://coey2lkutfrw3" path="res://UI/menu_theme_modern.tres" id="3_uggg1"]
+[ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="3_wpkri"]
 
-[node name="Character Select" type="Control" node_paths=PackedStringArray("button_p1", "button_p2")]
+[node name="Character Select" type="Control" unique_id=1518198777 node_paths=PackedStringArray("button_p1", "button_p2")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("2_theme")
@@ -11,7 +13,9 @@ script = ExtResource("1_char")
 button_p1 = NodePath("CenterContainer/VBoxContainer/ButtonP1")
 button_p2 = NodePath("CenterContainer/VBoxContainer/ButtonP2")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" parent="." unique_id=1991753837 instance=ExtResource("3_wpkri")]
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1235220829]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,31 +23,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1955622204]
 layout_mode = 2
 
-[node name="ButtonP1" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonP1" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1221349002]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonBack")
 focus_neighbor_bottom = NodePath("../ButtonP2")
+theme = ExtResource("3_uggg1")
 text = "p1:"
 
-[node name="ButtonP2" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonP2" type="Button" parent="CenterContainer/VBoxContainer" unique_id=268196595]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonP1")
 focus_neighbor_bottom = NodePath("../ButtonNext")
+theme = ExtResource("3_uggg1")
 text = "p2:"
 
-[node name="ButtonNext" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonNext" type="Button" parent="CenterContainer/VBoxContainer" unique_id=343371169]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonP2")
 focus_neighbor_bottom = NodePath("../ButtonBack")
+theme = ExtResource("3_uggg1")
 text = "next"
 
-[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer" unique_id=382344761]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonNext")
 focus_neighbor_bottom = NodePath("../ButtonP1")
+theme = ExtResource("3_uggg1")
 text = "back"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonP1" to="." method="_on_button_p1_pressed"]

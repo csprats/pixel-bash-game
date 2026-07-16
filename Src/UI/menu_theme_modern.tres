@@ -1,0 +1,55 @@
+[gd_resource type="Theme" format=3 uid="uid://coey2lkutfrw3"]
+
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="1_b80ns"]
+[ext_resource type="Texture2D" uid="uid://dwu63lg7blqy8" path="res://UI/Assets/kenney_modern/panel-transparent-center-007.png" id="2_h3kte"]
+[ext_resource type="Texture2D" uid="uid://c662qyrguh4ah" path="res://UI/Assets/kenney_modern/panel-border-007.png" id="3_q4x8v"]
+[ext_resource type="Texture2D" uid="uid://beaxu3uyyslwo" path="res://UI/Assets/kenney_modern/panel-007.png" id="4_6fqya"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6fqya"]
+texture = ExtResource("2_h3kte")
+texture_margin_left = 12.453288
+texture_margin_top = 12.597176
+texture_margin_right = 12.884949
+texture_margin_bottom = 12.741062
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tm0ke"]
+texture = ExtResource("2_h3kte")
+texture_margin_left = 15.215936
+texture_margin_top = 15.215936
+texture_margin_right = 15.215935
+texture_margin_bottom = 15.4266
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h3kte"]
+texture = ExtResource("2_h3kte")
+texture_margin_left = 15.215936
+texture_margin_top = 15.4266
+texture_margin_right = 15.00527
+texture_margin_bottom = 14.794605
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kyuwc"]
+texture = ExtResource("3_q4x8v")
+texture_margin_left = 13.139777
+texture_margin_top = 13.982437
+texture_margin_right = 13.530615
+texture_margin_bottom = 13.109285
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7efij"]
+texture = ExtResource("4_6fqya")
+texture_margin_left = 15.4266
+texture_margin_top = 15.637265
+texture_margin_right = 15.637265
+texture_margin_bottom = 16.26926
+region_rect = Rect2(0, 0, 48, 48)
+
+[resource]
+default_font = ExtResource("1_b80ns")
+default_font_size = 8
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/fonts/font = ExtResource("1_b80ns")
+Button/styles/disabled = null
+Button/styles/focus = SubResource("StyleBoxTexture_6fqya")
+Button/styles/hover = SubResource("StyleBoxTexture_tm0ke")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_h3kte")
+Button/styles/normal = SubResource("StyleBoxTexture_kyuwc")
+Button/styles/pressed = SubResource("StyleBoxTexture_7efij")

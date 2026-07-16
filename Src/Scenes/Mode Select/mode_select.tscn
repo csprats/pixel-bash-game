@@ -1,16 +1,20 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://cmcdydrtefyje"]
 
-[ext_resource type="Script" path="res://Scenes/Mode Select/mode_select.gd" id="1_mode"]
-[ext_resource type="Theme" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://cmroatw82wpxn" path="res://Scenes/Mode Select/mode_select.gd" id="1_mode"]
+[ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="3_hr8nl"]
+[ext_resource type="Theme" uid="uid://coey2lkutfrw3" path="res://UI/menu_theme_modern.tres" id="3_le4u3"]
 
-[node name="Mode Select" type="Control" node_paths=PackedStringArray("button_first")]
+[node name="Mode Select" type="Control" unique_id=1190728131 node_paths=PackedStringArray("button_first")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("2_theme")
 script = ExtResource("1_mode")
 button_first = NodePath("CenterContainer/VBoxContainer/ButtonPvP")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" parent="." unique_id=1991753837 instance=ExtResource("3_hr8nl")]
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2073587990]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,25 +22,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=88807432]
 layout_mode = 2
 
-[node name="ButtonPvP" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonPvP" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1375210158]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonBack")
 focus_neighbor_bottom = NodePath("../ButtonPvC")
+theme = ExtResource("3_le4u3")
 text = "1 vs 1"
 
-[node name="ButtonPvC" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonPvC" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1197696201]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonPvP")
 focus_neighbor_bottom = NodePath("../ButtonBack")
+theme = ExtResource("3_le4u3")
 text = "1 vs cpu"
 
-[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer" unique_id=914038921]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonPvC")
 focus_neighbor_bottom = NodePath("../ButtonPvP")
+theme = ExtResource("3_le4u3")
 text = "back"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonPvP" to="." method="_on_button_pvp_pressed"]
