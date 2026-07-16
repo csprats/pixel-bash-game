@@ -30,6 +30,12 @@ layout_mode = 2
 theme = ExtResource("3_7xkbd")
 text = "start"
 
+[node name="ButtonGuide" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2125331574]
+layout_mode = 2
+theme = ExtResource("3_7xkbd")
+text = "guide
+"
+
 [node name="ButtonQuit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=418504459]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonStart")
@@ -38,4 +44,5 @@ theme = ExtResource("3_7xkbd")
 text = "quit"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonStart" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonGuide" to="." method="_on_button_guide_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonQuit" to="." method="_on_button_quit_pressed"]

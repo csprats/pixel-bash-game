@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://mphxtv8rjsn6"]
 
 [ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="1_2i4no"]
-[ext_resource type="FontFile" uid="uid://uv8wc8ammdaq" path="res://Scenes/Title Screen/pixelated-times-new-roman.otf" id="1_2mq87"]
+[ext_resource type="FontFile" uid="uid://uv8wc8ammdaq" path="res://UI/Assets/pixelated-times-new-roman.otf" id="1_2mq87"]
 [ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="2_5dsjl"]
-[ext_resource type="FontFile" uid="uid://bc6ystme5t0fx" path="res://Scenes/Title Screen/m6x11.ttf" id="2_qvf3b"]
+[ext_resource type="FontFile" uid="uid://bc6ystme5t0fx" path="res://UI/Assets/m6x11.ttf" id="2_qvf3b"]
 [ext_resource type="Script" uid="uid://djjhdpf78x1op" path="res://Scenes/Title Screen/label.gd" id="3_wwswu"]
 
 [node name="TitleScreen" type="Node2D" unique_id=233609390]

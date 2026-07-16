@@ -13,6 +13,7 @@ const LEVEL_2_SCENE = "res://Scenes/Levels/level_2.tscn"
 const UI_SCENE = "res://UI/Game UI/ui.tscn"
 const WIN_INDICATOR = "res://Scenes/Win indicator/win_indicator.tscn"
 const TITLE_SCREEN = "res://Scenes/Title Screen/title_screen.tscn"
+const GUIDE = "res://Scenes/Guide/guide.tscn"
 
 # Aquí se almacena el ganador de la última partida
 var winner: int = 0 # Ponemos algo para que el juego no crashee

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bf2orpvs4xpik" path="res://Scenes/Win indicator/win_indicator.gd" id="1_pagg3"]
 [ext_resource type="Texture2D" uid="uid://o4inrwllq4ag" path="res://UI/Assets/kenney_modern/panel-transparent-center-011.png" id="2_r6hlk"]
 [ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="2_ss5w1"]
+[ext_resource type="PackedScene" uid="uid://v35a8pqxuid1" path="res://Scenes/Background/background.tscn" id="2_uprp6"]
 [ext_resource type="Theme" uid="uid://coey2lkutfrw3" path="res://UI/menu_theme_modern.tres" id="4_uprp6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_knn1k"]
@@ -24,6 +25,9 @@ script = ExtResource("1_pagg3")
 winner_icon = NodePath("TextureRect")
 winner_text = NodePath("Label2")
 button = NodePath("Button")
+
+[node name="Background" parent="." unique_id=1991753837 instance=ExtResource("2_uprp6")]
+position = Vector2(258, 56)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2108869485]
 layout_mode = 0

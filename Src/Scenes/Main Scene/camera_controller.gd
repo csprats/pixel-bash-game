@@ -21,8 +21,8 @@ func _physics_process(delta: float) -> void:
 	var players := get_tree().get_nodes_in_group("player")
 	if players.is_empty():
 		# Si no hay jugadores, devolvemos la cámara hacia su posición inicial
-		global_position = global_position.lerp(initial_position, 1.0 - exp(-zoom_speed * delta))
-		zoom = zoom.lerp(initial_zoom, 1.0 - exp(-zoom_speed * delta))
+		position = initial_position
+		zoom = initial_zoom
 		return
 
 	# 1. AABB que contiene a todos los jugadores.
