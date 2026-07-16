@@ -14,10 +14,15 @@ extends Camera2D
 ## Velocidad de interpolación del zoom (mayor = más rápido).
 @export var zoom_speed: float = 5.0
 
+var initial_position: Vector2 = global_position
+var initial_zoom: Vector2 = zoom
+
 func _physics_process(delta: float) -> void:
 	var players := get_tree().get_nodes_in_group("player")
 	if players.is_empty():
-		# Sin combate (p.ej. en el menú): no movemos la cámara.
+		# Si no hay jugadores, devolvemos la cámara hacia su posición inicial
+		global_position = global_position.lerp(initial_position, 1.0 - exp(-zoom_speed * delta))
+		zoom = zoom.lerp(initial_zoom, 1.0 - exp(-zoom_speed * delta))
 		return
 
 	# 1. AABB que contiene a todos los jugadores.

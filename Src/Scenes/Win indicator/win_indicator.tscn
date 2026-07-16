@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://c05dra47iilya"]
+
+[ext_resource type="Texture2D" uid="uid://dxbr7blr7vbyc" path="res://UI/Assets/kenney/portrait_frame.png" id="1_knn1k"]
+[ext_resource type="Script" uid="uid://bf2orpvs4xpik" path="res://Scenes/Win indicator/win_indicator.gd" id="1_pagg3"]
+[ext_resource type="FontFile" uid="uid://bo232otawetov" path="res://UI/Assets/PressStart2P-Regular.ttf" id="2_ss5w1"]
+[ext_resource type="Theme" uid="uid://bddumu0og7lmw" path="res://UI/menu_theme.tres" id="4_ps3m8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_knn1k"]
+texture = ExtResource("1_knn1k")
+texture_margin_left = 7.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 7.0
+region_rect = Rect2(-0.13664246, -0.04458499, 16.323769, 16.232277)
+
+[node name="WinIndicator" type="Control" unique_id=1983577115 node_paths=PackedStringArray("winner_icon", "winner_text", "button")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -164.0
+offset_top = -92.0
+offset_right = -164.0
+offset_bottom = -92.0
+script = ExtResource("1_pagg3")
+winner_icon = NodePath("TextureRect")
+winner_text = NodePath("Label2")
+button = NodePath("Button")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2108869485]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 7.0
+offset_right = 314.0
+offset_bottom = 169.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_knn1k")
+
+[node name="Label" type="Label" parent="." unique_id=301633505]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 24.0
+offset_right = 204.0
+offset_bottom = 32.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_ss5w1")
+theme_override_font_sizes/font_size = 8
+text = "Game Over!"
+
+[node name="Label2" type="Label" parent="." unique_id=721160964]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 47.0
+offset_right = 247.0
+offset_bottom = 66.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_ss5w1")
+theme_override_font_sizes/font_size = 8
+text = "biker wins the game"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1739790548]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 81.0
+offset_right = 183.0
+offset_bottom = 121.0
+
+[node name="Button" type="Button" parent="." unique_id=1776325267]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 135.0
+offset_right = 206.0
+offset_bottom = 159.0
+theme = ExtResource("4_ps3m8")
+text = "Main menu"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
