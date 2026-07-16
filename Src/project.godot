@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="GitHub Fighter game"
+config/name="Pixel Bash"
 run/main_scene="uid://yqpv0a0er1pc"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="uid://b2y1vq6mqnsjm"
 
 [autoload]
 
