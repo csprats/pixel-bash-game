@@ -1,4 +1,4 @@
-# Godot Fighter Game
+# Pixel Bash
 
 Un emocionante juego de lucha estilo brawl con una marcada estética **Pixel Art de estilo retro**. En este título, los jugadores se enfrentan en intensos combates dinámicos dentro de escenarios diseñados al milímetro, donde la precisión, el control del daño y la agilidad lo son todo.
 
