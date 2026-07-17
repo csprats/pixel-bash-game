@@ -23,7 +23,7 @@ jobs:
       - name: Upload to Itch.io via Butler
         uses: Ayowel/butler-to-itch@v1
         with:
-          butler_key: ${{ secrets.ITCH_API_KEY }}  # Se pone aquí dentro de "with"
+          butler_key: ${{ secrets.ITCH_API_KEY }}
           itch_user: "csprats"
-          itch_game: "pixel-bash"                  # Sin el "csprats/" delante
-          files: "Pixel.Bash.Windows.zip"           # En lugar de "package"
+          itch_game: "pixel-bash"
+          files: "Pixel.Bash.Windows.zip"
