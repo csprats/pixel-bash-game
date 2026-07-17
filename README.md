@@ -19,3 +19,8 @@ El proyecto está siendo desarrollado desde cero en **Godot 4**, cuidando tanto 
 ## Estado del Proyecto
 
 Actualmente el juego se encuentra en fase de **Desarrollo Activo / Prototipo**. Ya cuenta con un menú principal funcional, un sistema automatizado de carga de niveles y arenas de prueba donde se están puliendo las mecánicas de combate y el comportamiento de los personajes.
+
+# Plataformas
+
+Hemos subido el juego a itchio: https://csprats.itch.io/pixel-bash
+De momento solo tiene soporte para Windows
