@@ -2,33 +2,30 @@ name: Publish to Itch.io
 
 on:
   release:
-    types: [published] # Automatically triggers when a new release is published on GitHub
+    types: [published]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repository source code
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      # 2. Download the attached artifacts from the GitHub release
-      # (Make sure your build artifact is already uploaded to the release)
+      # Buscamos específicamente el zip de Windows que subiste
       - name: Download Release Assets
         uses: robinraju/release-downloader@v1.8
         with:
           latest: true
-          fileName: "*.zip" # Change this if your game is in another format (e.g., .tar.gz)
+          fileName: "Pixel.Bash.Windows.zip"
           out-heading: false
 
-      # 3. Upload the downloaded file directly to Itch.io using Butler
       - name: Upload to Itch.io via Butler
         uses: josephbmanley/itchio-butler-action@v1.1.2
         with:
           itch_game: "csprats/pixel-bash"
           itch_user: "csprats"
           package: "Pixel.Bash.Windows.zip"
-          channel: "windows" # Change according to the platform: windows, linux, osx, web, etc.
+          channel: "windows"
         env:
           BUTLER_API_KEY: ${{ secrets.ITCH_API_KEY }}
