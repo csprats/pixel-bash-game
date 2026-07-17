@@ -21,11 +21,9 @@ jobs:
           out-heading: false
 
       - name: Upload to Itch.io via Butler
-        uses: josephbmanley/itchio-butler-action@v1.1.2
+        uses: Ayowel/butler-to-itch@v1
         with:
-          itch_game: "csprats/pixel-bash"
+          butler_key: ${{ secrets.ITCH_API_KEY }}  # Se pone aquí dentro de "with"
           itch_user: "csprats"
-          package: "Pixel.Bash.Windows.zip"
-          channel: "windows"
-        env:
-          BUTLER_API_KEY: ${{ secrets.ITCH_API_KEY }}
+          itch_game: "pixel-bash"                  # Sin el "csprats/" delante
+          files: "Pixel.Bash.Windows.zip"           # En lugar de "package"
