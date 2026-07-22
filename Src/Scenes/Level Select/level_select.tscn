@@ -35,17 +35,25 @@ text = "level 1"
 [node name="ButtonLevel2" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1050921623]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ButtonLevel1")
-focus_neighbor_bottom = NodePath("../ButtonBack")
+focus_neighbor_bottom = NodePath("../ButtonLevel3")
 theme = ExtResource("3_lnluj")
 text = "level 2"
 
+[node name="ButtonLevel3" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1663171094]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonLevel1")
+focus_neighbor_bottom = NodePath("../ButtonBack")
+theme = ExtResource("3_lnluj")
+text = "level 3"
+
 [node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer" unique_id=323035607]
 layout_mode = 2
-focus_neighbor_top = NodePath("../ButtonLevel2")
+focus_neighbor_top = NodePath("../ButtonLevel3")
 focus_neighbor_bottom = NodePath("../ButtonLevel1")
 theme = ExtResource("3_lnluj")
 text = "back"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonLevel1" to="." method="_on_button_level_1_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonLevel2" to="." method="_on_button_level_2_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonLevel3" to="." method="_on_button_level_3_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonBack" to="." method="_on_button_back_pressed"]

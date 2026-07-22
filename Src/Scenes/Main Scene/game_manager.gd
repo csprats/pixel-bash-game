@@ -10,6 +10,7 @@ const CHARACTER_SELECT_SCENE = "res://Scenes/Character Select/character_select.t
 const LEVEL_SELECT_SCENE = "res://Scenes/Level Select/level_select.tscn"
 const LEVEL_1_SCENE = "res://Scenes/Levels/level_1.tscn"
 const LEVEL_2_SCENE = "res://Scenes/Levels/level_2.tscn"
+const LEVEL_3_SCENE = "res://Scenes/Levels/level_3.tscn"
 const UI_SCENE = "res://UI/Game UI/ui.tscn"
 const WIN_INDICATOR = "res://Scenes/Win indicator/win_indicator.tscn"
 const TITLE_SCREEN = "res://Scenes/Title Screen/title_screen.tscn"

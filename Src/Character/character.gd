@@ -476,7 +476,7 @@ func _play_no_mana_flash() -> void:
 	await get_tree().create_timer(0.15, true, false, true).timeout
 	modulate = Color(1, 1, 1, 1)
 
-func _on_hitbox_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_hitbox_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	if area.owner == self:
 		return # Ignoramos nuestro propio cuerpo
 

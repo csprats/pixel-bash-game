@@ -16,6 +16,9 @@ func _on_button_level_1_pressed() -> void:
 
 func _on_button_level_2_pressed() -> void:
 	GameManager.change_scene(GameManager.LEVEL_2_SCENE, true)
+	
+func _on_button_level_3_pressed() -> void:
+	GameManager.change_scene(GameManager.LEVEL_3_SCENE, true)
 
 func _on_button_back_pressed() -> void:
 	GameManager.change_scene(GameManager.CHARACTER_SELECT_SCENE)

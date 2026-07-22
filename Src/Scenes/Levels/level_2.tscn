@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bbwn20h4hi1fi"]
 
-[ext_resource type="Texture2D" uid="uid://dml0ujfru4vhx" path="res://Tilesets/Tileset.png" id="1_exqq0"]
+[ext_resource type="Texture2D" uid="uid://dml0ujfru4vhx" path="res://Tilesets/TilesetGreenZone.png" id="1_exqq0"]
 [ext_resource type="PackedScene" uid="uid://tl2em8dc6lux" path="res://Character/character.tscn" id="2_512ox"]
 [ext_resource type="Texture2D" uid="uid://bdjj744inr1lu" path="res://Scenes/Levels/Assets/Clouds 2/1.png" id="2_blpqv"]
 [ext_resource type="Texture2D" uid="uid://bvy5kxcvx6bx" path="res://Scenes/Levels/Assets/Clouds 2/2.png" id="3_1jlnc"]
