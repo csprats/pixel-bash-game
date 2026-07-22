@@ -23,4 +23,4 @@ Actualmente el juego se encuentra en fase de **Desarrollo Activo / Prototipo**. 
 # Plataformas
 
 Hemos subido el juego a itchio: https://csprats.itch.io/pixel-bash
-De momento solo tiene soporte para Windows
+De momento solo tiene soporte para Windows.
