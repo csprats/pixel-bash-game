@@ -5,6 +5,8 @@ extends Control
 func _ready() -> void:
 	# Hace que el botón de Jugar esté seleccionado al arrancar con el mando
 	button_play.grab_focus()
+	
+	GameManager.play_music(GameManager.MAIN_MENU_SONG)
 
 func _on_button_start_pressed() -> void:
 	GameManager.change_scene(GameManager.MODE_SELECT_SCENE)

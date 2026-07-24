@@ -16,6 +16,16 @@ const WIN_INDICATOR = "res://Scenes/Win indicator/win_indicator.tscn"
 const TITLE_SCREEN = "res://Scenes/Title Screen/title_screen.tscn"
 const GUIDE = "res://Scenes/Guide/guide.tscn"
 
+# Rutas de las canciones:
+
+const MAIN_MENU_SONG = "res://Music/Intro.mp3"
+const LEVEL_1_SONG = "res://Music/For What Remains.mp3"
+const LEVEL_2_SONG = "res://Music/For The Fallen Ones.mp3"
+const LEVEL_3_SONG = "res://Music/For Vengeance.mp3"
+
+var audio_stream_player: AudioStreamPlayer2D
+var current_music_path: String
+
 # Aquí se almacena el ganador de la última partida
 var winner: int = 0 # Ponemos algo para que el juego no crashee
 var winner_data_path: String
@@ -76,3 +86,22 @@ func change_scene(scene_path: String, with_ui: bool = false) -> void:
 		
 		_container.add_child(new_ui_instance)
 		print("UI añadida con éxito. Ruta: ", scene_path)
+		
+func play_music(music: String) -> void:
+	# 1. Verificar si el archivo existe en la ruta especificada
+	if not FileAccess.file_exists(music):
+		print("Error: The music file do not exist: ", music)
+		return
+	# 2. Cargar el archivo .ogg como un AudioStreamOOGVorbis
+	var stream = AudioStreamMP3.load_from_file(music)
+	
+	if stream and audio_stream_player:
+		# Si es la misma canción, no hacemos nada
+		if (music == current_music_path):
+			return
+		current_music_path = music
+		# 3. Asignar el stream al AudioStreamPlayer y reproducir
+		audio_stream_player.stream = stream
+		audio_stream_player.play()
+	else:
+		print("Error: The music file cannot be played.")

@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://mkgig44x36gf" path="res://Scenes/Main Scene/main_scene.gd" id="1_sr30m"]
 [ext_resource type="Script" uid="uid://b8irpdd27418g" path="res://Scenes/Main Scene/camera_controller.gd" id="4_cam"]
 
-[node name="Node2D" type="Node2D" unique_id=529680049 node_paths=PackedStringArray("scene_container")]
+[node name="Node2D" type="Node2D" unique_id=529680049 node_paths=PackedStringArray("scene_container", "music_container")]
 script = ExtResource("1_sr30m")
 scene_container = NodePath("SceneContainer")
+music_container = NodePath("Music")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=277988731]
 position_smoothing_enabled = true
@@ -14,3 +15,5 @@ min_zoom = 0.5
 max_zoom = 0.7
 
 [node name="SceneContainer" type="Node" parent="." unique_id=1324025487]
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=686829019]

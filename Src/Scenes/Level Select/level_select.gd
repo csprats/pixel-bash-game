@@ -12,12 +12,15 @@ func _ready() -> void:
 
 func _on_button_level_1_pressed() -> void:
 	# with_ui = true: los niveles de combate llevan la HUD del juego.
+	GameManager.play_music(GameManager.LEVEL_1_SONG)
 	GameManager.change_scene(GameManager.LEVEL_1_SCENE, true)
 
 func _on_button_level_2_pressed() -> void:
+	GameManager.play_music(GameManager.LEVEL_2_SONG)
 	GameManager.change_scene(GameManager.LEVEL_2_SCENE, true)
 	
 func _on_button_level_3_pressed() -> void:
+	GameManager.play_music(GameManager.LEVEL_3_SONG)
 	GameManager.change_scene(GameManager.LEVEL_3_SCENE, true)
 
 func _on_button_back_pressed() -> void:
