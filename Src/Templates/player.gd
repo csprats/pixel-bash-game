@@ -36,6 +36,8 @@ class_name CharacterData
 # Por personaje porque cada arma tiene un alcance distinto.
 @export var attack_hitbox_offset: Vector2 = Vector2(14, 4)
 @export var attack_hitbox_size: Vector2 = Vector2(22, 34)
+# Cada jugador tiene una fuerza diferente, por lo que algunos quitan más vida
+@export var strong = 5
 
 
 @export_group("Habilidades")

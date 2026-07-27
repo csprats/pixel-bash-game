@@ -88,20 +88,23 @@ func change_scene(scene_path: String, with_ui: bool = false) -> void:
 		print("UI añadida con éxito. Ruta: ", scene_path)
 		
 func play_music(music: String) -> void:
-	# 1. Verificar si el archivo existe en la ruta especificada
-	if not FileAccess.file_exists(music):
-		print("Error: The music file do not exist: ", music)
+	# 1. Si es la misma canción que ya suena, no hacemos nada
+	if music == current_music_path:
 		return
-	# 2. Cargar el archivo .ogg como un AudioStreamOOGVorbis
-	var stream = AudioStreamMP3.load_from_file(music)
+		
+	# 2. Verificar si el recurso existe usando ResourceLoader (funciona exportado)
+	if not ResourceLoader.exists(music):
+		print("Error: The music file does not exist in resources: ", music)
+		return
+		
+	# 3. Cargar el recurso correctamente usando load()
+	# Godot ya sabe internamente si es un MP3, OGG o WAV optimizado
+	var stream = load(music)
 	
+	# 4. Asignar y reproducir
 	if stream and audio_stream_player:
-		# Si es la misma canción, no hacemos nada
-		if (music == current_music_path):
-			return
 		current_music_path = music
-		# 3. Asignar el stream al AudioStreamPlayer y reproducir
 		audio_stream_player.stream = stream
 		audio_stream_player.play()
 	else:
-		print("Error: The music file cannot be played.")
+		print("Error: The music file cannot be played or audio_stream_player is null.")

@@ -21,5 +21,6 @@ body_animations = ExtResource("1_im0nh")
 weapon_animations = ExtResource("3_im0nh")
 attack_hitbox_offset = Vector2(10, 4)
 attack_hitbox_size = Vector2(8, 3)
+strong = 7
 special_abilities = Array[GDScript]([ExtResource("3_6qoyw"), ExtResource("4_7di27"), ExtResource("6_am2sj")])
 metadata/_custom_type_script = "uid://4au8kg10088b"

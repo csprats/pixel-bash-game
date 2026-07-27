@@ -484,6 +484,6 @@ func _on_hitbox_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_ind
 		# Si el objeto de la sala tiene un script con esta función, le restamos vida/daño
 		if area.get_parent().has_method("receive_damage") and not area.get_parent()._is_invincible:
 			# Empujamos a la víctima hacia donde mira el atacante (self).
-			area.get_parent().receive_damage(5, _body.scale.x)
+			area.get_parent().receive_damage(character_data.strong, _body.scale.x)
 			# Golpear al rival regenera algo de maná (menos que al recibir daño).
 			gain_mana(character_data.mana_gain_on_hit)
