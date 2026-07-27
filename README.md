@@ -1,26 +1,26 @@
 # Pixel Bash
 
-Un emocionante juego de lucha estilo brawl con una marcada estética **Pixel Art de estilo retro**. En este título, los jugadores se enfrentan en intensos combates dinámicos dentro de escenarios diseñados al milímetro, donde la precisión, el control del daño y la agilidad lo son todo.
+An exciting brawler-style fighting game featuring a distinct **retro pixel art aesthetic**. In this title, players engage in intense, dynamic combat within meticulously designed stages, where precision, damage management, and agility are everything.
 
-El proyecto está siendo desarrollado desde cero en **Godot 4**, cuidando tanto la fluidez de los controles como la fidelidad visual clásica de las consolas de antaño.
+The project is being developed from scratch in **Godot 4**, focusing on both responsive controls and the classic visual fidelity of consoles from yesteryear.
 
-## Experiencia de Juego (Gameplay)
+## Gameplay
 
-*   **Combates Dinámicos:** Enfrentamientos rápidos en arenas 2D donde cada golpe cuenta.
-*   **Sistema de Daño Acumulativo:** Cuanto más daño recibes (expresado en %), más vulnerable te vuelves a los ataques enemigos. ¡Gestiona tus vidas con cuidado para mantenerte en la pelea!
-*   **Control de Cámara Fluido:** Una cámara inteligente que se adapta a la acción de la pantalla de forma suave, manteniendo la nitidez de los personajes en todo momento.
+*   **Dynamic Combat:** Fast-paced clashes in 2D arenas where every hit counts.
+*   **Accumulative Damage System:** The more damage you take (displayed as a percentage), the more vulnerable you become to enemy attacks. Manage your health carefully to stay in the fight!
+*   **Fluid Camera Control:** A smart camera that smoothly adapts to the on-screen action, keeping characters sharp and clear at all times.
 
-## Apartado Visual y Arte
+## Visuals and Art
 
-*   **Estética Retro / Pixel Perfect:** Diseñado de forma nativa en baja resolución para evocar la era dorada de los videojuegos de 8 y 16 bits.
-*   **Diseño Limpio y Cuidado:** Los sprites de los personajes y los elementos del escenario mantienen sus proporciones perfectas gracias a un renderizado moderno optimizado para Pixel Art.
-*   **Interfaz de Usuario Integrada:** Menús modernos y barras de estado estilizadas con texturas personalizadas que no roban espacio a la acción principal.
+*   **Retro / Pixel-Perfect Aesthetic:** Designed natively in low resolution to evoke the golden age of 8-bit and 16-bit video games.
+*   **Clean, Polished Design:** Character sprites and stage elements maintain perfect proportions thanks to modern rendering optimized for pixel art.
+*   **Integrated User Interface:** Modern menus and stylized status bars featuring custom textures that don't clutter the main action area.
 
-## Estado del Proyecto
+## Project Status
 
-Actualmente el juego se encuentra en fase de **Desarrollo Activo / Prototipo**. Ya cuenta con un menú principal funcional, un sistema automatizado de carga de niveles y arenas de prueba donde se están puliendo las mecánicas de combate y el comportamiento de los personajes.
+The game is currently in the **Active Development / Prototype** phase. It already features a functional main menu, an automated level-loading system, and test arenas where combat mechanics and character behavior are being fine-tuned.
 
-# Plataformas
+# Platforms
 
-Hemos subido el juego a itchio: https://csprats.itch.io/pixel-bash
-De momento solo tiene soporte para Windows.
+We have uploaded the game to itch.io: https://csprats.itch.io/pixel-bash
+It currently supports Windows and web browsers.
